@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/nshun/react-werewolf/issues"
   },
-  "homepage": "https://github.com/nshun/react-werewolf#readme",
+  "homepage": "https://werewolf.nnshun.com/",
   "dependencies": {
     "@types/jest": "24.0.11",
     "@types/node": "11.11.3",
