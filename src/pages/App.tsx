@@ -1,30 +1,67 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import Button from "@material-ui/core/Button";
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  Input,
+  InputLabel,
+  NativeSelect,
+  Typography
+} from "@material-ui/core";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
-import Typography from "@material-ui/core/Typography";
 
-import { ActionDispatcher } from "../containers/AppContainer";
-import { GameState } from "../reducers/counter";
+import { AppState } from "../store";
+import { updateSetting } from "../store/setting/actions";
+import { Setting } from "../store/setting/types";
 import withRoot from "../withRoot";
 
 const styles = (theme: Theme) =>
   createStyles({
     root: {
       textAlign: "center",
+      margin: theme.spacing.unit * 2,
       paddingTop: theme.spacing.unit * 20
+    },
+    forms: {
+      display: "flex",
+      flexDirection: "column"
+    },
+    formControl: {
+      margin: theme.spacing.unit,
+      minWidth: 120
     }
   });
 
-interface Props extends WithStyles<typeof styles> {
-  value: GameState;
-  actions: ActionDispatcher;
+interface AppProps extends WithStyles<typeof styles> {
+  updateSetting: typeof updateSetting;
+  setting: Setting;
 }
 
-class Index extends React.Component<Props> {
+class Index extends React.Component<AppProps> {
+  public state = {
+    players: this.props.setting.players,
+    villagers: this.props.setting.villagers,
+    werewolves: this.props.setting.werewolves
+  };
+  public updateSetting = () => {
+    const newSetting: Setting = {
+      players: this.state.players,
+      villagers: this.state.villagers,
+      werewolves: this.state.werewolves
+    };
+    this.props.updateSetting(newSetting);
+  };
+  public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+    switch (evt.target.name) {
+      case "player":
+        this.setState({ players: evt.target.value });
+        break;
+    }
+  };
   public render() {
     return (
       <div className={this.props.classes.root}>
@@ -34,28 +71,70 @@ class Index extends React.Component<Props> {
         <Typography variant="subtitle1" gutterBottom={true}>
           A party game with offline
         </Typography>
+        <div className={this.props.classes.forms}>
+          <FormControl className={this.props.classes.formControl}>
+            <InputLabel htmlFor="age-native-helper">
+              Select the numbers of players
+            </InputLabel>
+            <NativeSelect
+              name="player"
+              onChange={this.handleChange}
+              input={<Input name="playersNum" />}
+            >
+              <option value="" />
+              <option value={10}>Ten</option>
+              <option value={20}>Twenty</option>
+              <option value={30}>Thirty</option>
+            </NativeSelect>
+          </FormControl>
+          <FormControl className={this.props.classes.formControl}>
+            <InputLabel htmlFor="age-native-helper">The Villagers</InputLabel>
+            <NativeSelect
+              onChange={this.handleChange}
+              input={<Input name="villagersNum" />}
+            >
+              <option value="" />
+              <option value={10}>Ten</option>
+              <option value={20}>Twenty</option>
+              <option value={30}>Thirty</option>
+            </NativeSelect>
+          </FormControl>
+          <FormControl className={this.props.classes.formControl}>
+            <InputLabel htmlFor="age-native-helper">The Werewolves</InputLabel>
+            <NativeSelect
+              onChange={this.handleChange}
+              input={<Input name="werewolvesNum" />}
+            >
+              <option value="" />
+              <option value={10}>Ten</option>
+              <option value={20}>Twenty</option>
+              <option value={30}>Thirty</option>
+            </NativeSelect>
+            <FormHelperText>
+              Typically werewolves are outnumbered by villagers 2 to 1.
+            </FormHelperText>
+          </FormControl>
+        </div>
         <Typography variant="subtitle2" gutterBottom={true}>
-          score: {this.props.value.num}
+          score: {this.props.setting.players}
         </Typography>
-        <Button variant="contained" color="primary" onClick={this.onIncrement}>
-          Increment
-        </Button>
         <Button
           variant="contained"
-          color="secondary"
-          onClick={this.onDecrement}
+          color="primary"
+          onClick={this.updateSetting}
         >
-          Decrement
+          START
         </Button>
       </div>
     );
   }
-  private onIncrement = () => {
-    this.props.actions.increment(1);
-  };
-  private onDecrement = () => {
-    this.props.actions.decrement(1);
-  };
 }
 
-export default withRoot(withStyles(styles)(Index));
+const mapStateToProps = (state: AppState) => ({
+  setting: state.setting
+});
+
+export default connect(
+  mapStateToProps,
+  { updateSetting }
+)(withRoot(withStyles(styles)(Index)));
