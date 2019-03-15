@@ -57,9 +57,12 @@ class Index extends React.Component<AppProps> {
   };
   public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     switch (evt.target.name) {
-      case "player":
-        this.setState({ players: evt.target.value });
-        break;
+      case "players":
+        return this.setState({ players: parseInt(evt.target.value, 10) });
+      case "villagers":
+        return this.setState({ villagers: parseInt(evt.target.value, 10) });
+      case "werewolves":
+        return this.setState({ werewolves: parseInt(evt.target.value, 10) });
     }
   };
   public render() {
@@ -78,9 +81,9 @@ class Index extends React.Component<AppProps> {
                 Numbers of players
               </InputLabel>
               <NativeSelect
-                name="player"
+                name="players"
                 onChange={this.handleChange}
-                input={<Input name="playersNum" />}
+                input={<Input />}
               >
                 <option value="" />
                 <option value={10}>Ten</option>
@@ -93,8 +96,9 @@ class Index extends React.Component<AppProps> {
             <FormControl className={this.props.classes.formControl}>
               <InputLabel htmlFor="age-native-helper">The Villagers</InputLabel>
               <NativeSelect
+                name="villagers"
                 onChange={this.handleChange}
-                input={<Input name="villagersNum" />}
+                input={<Input />}
               >
                 <option value="" />
                 <option value={10}>Ten</option>
@@ -109,8 +113,9 @@ class Index extends React.Component<AppProps> {
                 The Werewolves
               </InputLabel>
               <NativeSelect
+                name="werewolves"
                 onChange={this.handleChange}
-                input={<Input name="werewolvesNum" />}
+                input={<Input />}
               >
                 <option value="" />
                 <option value={10}>Ten</option>
