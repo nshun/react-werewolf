@@ -26,13 +26,12 @@ const styles = (theme: Theme) =>
       margin: theme.spacing.unit * 2,
       paddingTop: theme.spacing.unit * 20
     },
-    forms: {
-      display: "flex",
-      flexDirection: "column"
+    formsWrapper: {
+      margin: theme.spacing.unit * 2
     },
     formControl: {
       margin: theme.spacing.unit,
-      minWidth: 120
+      minWidth: 200
     }
   });
 
@@ -71,56 +70,59 @@ class Index extends React.Component<AppProps> {
         <Typography variant="subtitle1" gutterBottom={true}>
           A party game with offline
         </Typography>
-        <div className={this.props.classes.forms}>
-          <FormControl className={this.props.classes.formControl}>
-            <InputLabel htmlFor="age-native-helper">
-              Select the numbers of players
-            </InputLabel>
-            <NativeSelect
-              name="player"
-              onChange={this.handleChange}
-              input={<Input name="playersNum" />}
-            >
-              <option value="" />
-              <option value={10}>Ten</option>
-              <option value={20}>Twenty</option>
-              <option value={30}>Thirty</option>
-            </NativeSelect>
-          </FormControl>
-          <FormControl className={this.props.classes.formControl}>
-            <InputLabel htmlFor="age-native-helper">The Villagers</InputLabel>
-            <NativeSelect
-              onChange={this.handleChange}
-              input={<Input name="villagersNum" />}
-            >
-              <option value="" />
-              <option value={10}>Ten</option>
-              <option value={20}>Twenty</option>
-              <option value={30}>Thirty</option>
-            </NativeSelect>
-          </FormControl>
-          <FormControl className={this.props.classes.formControl}>
-            <InputLabel htmlFor="age-native-helper">The Werewolves</InputLabel>
-            <NativeSelect
-              onChange={this.handleChange}
-              input={<Input name="werewolvesNum" />}
-            >
-              <option value="" />
-              <option value={10}>Ten</option>
-              <option value={20}>Twenty</option>
-              <option value={30}>Thirty</option>
-            </NativeSelect>
-            <FormHelperText>
-              Typically werewolves are outnumbered by villagers 2 to 1.
-            </FormHelperText>
-          </FormControl>
+        <div className={this.props.classes.formsWrapper}>
+          <div>
+            <FormControl className={this.props.classes.formControl}>
+              <InputLabel htmlFor="age-native-helper">
+                Numbers of players
+              </InputLabel>
+              <NativeSelect
+                name="player"
+                onChange={this.handleChange}
+                input={<Input name="playersNum" />}
+              >
+                <option value="" />
+                <option value={10}>Ten</option>
+                <option value={20}>Twenty</option>
+                <option value={30}>Thirty</option>
+              </NativeSelect>
+            </FormControl>
+          </div>
+          <div>
+            <FormControl className={this.props.classes.formControl}>
+              <InputLabel htmlFor="age-native-helper">The Villagers</InputLabel>
+              <NativeSelect
+                onChange={this.handleChange}
+                input={<Input name="villagersNum" />}
+              >
+                <option value="" />
+                <option value={10}>Ten</option>
+                <option value={20}>Twenty</option>
+                <option value={30}>Thirty</option>
+              </NativeSelect>
+            </FormControl>
+          </div>
+          <div>
+            <FormControl className={this.props.classes.formControl}>
+              <InputLabel htmlFor="age-native-helper">
+                The Werewolves
+              </InputLabel>
+              <NativeSelect
+                onChange={this.handleChange}
+                input={<Input name="werewolvesNum" />}
+              >
+                <option value="" />
+                <option value={10}>Ten</option>
+                <option value={20}>Twenty</option>
+                <option value={30}>Thirty</option>
+              </NativeSelect>
+            </FormControl>
+          </div>
         </div>
-        <Typography variant="subtitle2" gutterBottom={true}>
-          score: {this.props.setting.players}
-        </Typography>
         <Button
-          variant="contained"
+          variant="extendedFab"
           color="primary"
+          size="large"
           onClick={this.updateSetting}
         >
           START
