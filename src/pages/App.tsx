@@ -11,6 +11,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  TextField,
   Typography
 } from "@material-ui/core";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
@@ -90,6 +91,8 @@ class Index extends React.Component<AppProps, State> {
         });
     }
   };
+  public handleOpenName = () =>
+    this.setState({ ...this.state, openName: true });
   public handleOpenRole = () =>
     this.setState({ ...this.state, openRole: true });
   public handleCancel = () =>
@@ -99,15 +102,39 @@ class Index extends React.Component<AppProps, State> {
     this.handleCancel();
   };
 
+  public NameDialog = () => {
+    const nums = new Array(this.state.players);
+    for (let i = 0; i < nums.length; i++) {
+      nums[i] = i + 1;
+    }
+    return (
+      <Dialog open={this.state.openName} onClose={this.handleCancel}>
+        <DialogTitle>Names</DialogTitle>
+        <div className={this.props.classes.wrapper}>
+          {nums.map((item, i) => {
+            return (
+              <div key={i}>
+                <TextField label={`Player ${item}`} />
+              </div>
+            );
+          })}
+        </div>
+        <DialogActions>
+          <Button onClick={this.handleCancel} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={this.handleOk} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  };
+
   public RoleDialog = () => {
     const villagers = this.state.players - this.state.werewolves;
     return (
-      <Dialog
-        disableBackdropClick={true}
-        disableEscapeKeyDown={true}
-        open={this.state.openRole}
-        onClose={this.handleCancel}
-      >
+      <Dialog open={this.state.openRole} onClose={this.handleCancel}>
         <DialogTitle>Roles</DialogTitle>
         <DialogContent className={this.props.classes.wrapper}>
           <form>
@@ -162,14 +189,21 @@ class Index extends React.Component<AppProps, State> {
               name="players"
               value={this.state.players}
               onChange={this.handleChange}
+              onClose={this.handleOpenName}
             >
               {NumberMenuItems(2, 10)}
             </Select>
           </FormControl>
         </form>
         <div className={this.props.classes.wrapper}>
+          <Button variant="outlined" onClick={this.handleOpenName}>
+            Name Setting
+          </Button>
+        </div>
+        <this.NameDialog />
+        <div className={this.props.classes.wrapper}>
           <Button variant="outlined" onClick={this.handleOpenRole}>
-            Roles Setting
+            Role Setting
           </Button>
         </div>
         <this.RoleDialog />
