@@ -110,15 +110,15 @@ class Index extends React.Component<AppProps, State> {
     return (
       <Dialog open={this.state.openName} onClose={this.handleCancel}>
         <DialogTitle>Names</DialogTitle>
-        <div className={this.props.classes.wrapper}>
+        <DialogContent>
           {nums.map((item, i) => {
             return (
-              <div key={i}>
+              <div key={i} className={this.props.classes.wrapper}>
                 <TextField label={`Player ${item}`} />
               </div>
             );
           })}
-        </div>
+        </DialogContent>
         <DialogActions>
           <Button onClick={this.handleCancel} color="secondary">
             Cancel
