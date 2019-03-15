@@ -2,15 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import App from "./container/App";
+import AppContainer from "./container/AppContainer";
 import "./index.css";
+import App from "./pages/App";
 import * as serviceWorker from "./serviceWorker";
-import Counter from "./state/Container";
 import store from "./store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <Counter />
+    <AppContainer />
   </Provider>,
   document.getElementById("root")
 );

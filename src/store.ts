@@ -1,14 +1,20 @@
-import { Action, combineReducers, createStore } from "redux";
-import counter, { CounterActions, CounterState } from "./state/module";
+import { Action, combineReducers, compose, createStore } from "redux";
+import { CounterActions } from "./actions/counter";
+import counter, { GameState } from "./reducers/counter";
 
-export default createStore(
-  combineReducers({
-    counter
-  })
-);
+const rootReducer = combineReducers({
+  counter
+});
 
 export interface ReduxState {
-  counter: CounterState;
+  counter: GameState;
 }
 
 export type ReduxAction = CounterActions | Action;
+
+function createFinalStore() {
+  const finalCreateStore = compose()(createStore);
+  return finalCreateStore(rootReducer);
+}
+
+export default createFinalStore();

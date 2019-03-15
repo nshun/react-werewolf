@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import App from "../container/App";
+
+import { decrementAmount, incrementAmount } from "../actions/counter";
+import App from "../pages/App";
 import { ReduxAction, ReduxState } from "../store";
-import { decrementAmount, incrementAmount } from "./module";
 
 export class ActionDispatcher {
   constructor(private dispatch: (action: ReduxAction) => void) {}

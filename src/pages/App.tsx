@@ -7,15 +7,9 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 
-import { ActionDispatcher } from "../state/Container";
-import { CounterState } from "../state/module";
+import { ActionDispatcher } from "../container/AppContainer";
+import { GameState } from "../reducers/counter";
 import withRoot from "../withRoot";
-import "./App.css";
-
-interface Props extends WithStyles<typeof styles> {
-  value: CounterState;
-  actions: ActionDispatcher;
-}
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -25,13 +19,12 @@ const styles = (theme: Theme) =>
     }
   });
 
+interface Props extends WithStyles<typeof styles> {
+  value: GameState;
+  actions: ActionDispatcher;
+}
+
 class Index extends React.Component<Props> {
-  public onIncrement = () => {
-    this.props.actions.increment(1);
-  };
-  public onDecrement = () => {
-    this.props.actions.decrement(1);
-  };
   public render() {
     return (
       <div className={this.props.classes.root}>
@@ -57,6 +50,12 @@ class Index extends React.Component<Props> {
       </div>
     );
   }
+  private onIncrement = () => {
+    this.props.actions.increment(1);
+  };
+  private onDecrement = () => {
+    this.props.actions.decrement(1);
+  };
 }
 
 export default withRoot(withStyles(styles)(Index));
