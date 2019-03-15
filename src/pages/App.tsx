@@ -32,7 +32,7 @@ const styles = (theme: Theme) =>
       left: "50%",
       transform: "translateY(-50%) translateX(-50%)"
     },
-    formsWrapper: {
+    wrapper: {
       margin: theme.spacing.unit * 2
     },
     formControl: {
@@ -46,13 +46,26 @@ interface AppProps extends WithStyles<typeof styles> {
   setting: Setting;
 }
 
-class Index extends React.Component<AppProps> {
-  public state = {
-    open: false,
-    players: this.props.setting.players,
-    werewolves: 0
-  };
+interface State {
+  openName: boolean;
+  openRole: boolean;
+  players: number;
+  werewolves: number;
+}
 
+class Index extends React.Component<AppProps, State> {
+  constructor(props: Readonly<AppProps>) {
+    super(props);
+    this.state = {
+      openName: false,
+      openRole: false,
+      players: this.props.setting.players,
+      werewolves: Math.max(
+        1,
+        Math.floor(Number(this.props.setting.players) / 3)
+      )
+    };
+  }
   public updateSetting = () => {
     const newSetting: Setting = {
       players: this.state.players,
@@ -66,7 +79,7 @@ class Index extends React.Component<AppProps> {
       case "players":
         return this.setState({
           ...this.state,
-          open: true,
+          openName: true,
           players: Number(evt.target.value),
           werewolves: Math.max(1, Math.floor(Number(evt.target.value) / 3))
         });
@@ -77,11 +90,13 @@ class Index extends React.Component<AppProps> {
         });
     }
   };
-  public handleClickOpen = () => this.setState({ ...this.state, open: true });
-  public handleCancel = () => this.setState({ ...this.state, open: false });
+  public handleOpenRole = () =>
+    this.setState({ ...this.state, openRole: true });
+  public handleCancel = () =>
+    this.setState({ ...this.state, openName: false, openRole: false });
   public handleOk = () => {
     this.updateSetting();
-    this.setState({ ...this.state, open: false });
+    this.handleCancel();
   };
 
   public RoleDialog = () => {
@@ -90,11 +105,11 @@ class Index extends React.Component<AppProps> {
       <Dialog
         disableBackdropClick={true}
         disableEscapeKeyDown={true}
-        open={this.state.open}
+        open={this.state.openRole}
         onClose={this.handleCancel}
       >
-        <DialogTitle>Fill the form</DialogTitle>
-        <DialogContent className={this.props.classes.formsWrapper}>
+        <DialogTitle>Roles</DialogTitle>
+        <DialogContent className={this.props.classes.wrapper}>
           <form>
             <FormControl
               className={this.props.classes.formControl}
@@ -134,13 +149,13 @@ class Index extends React.Component<AppProps> {
   public render() {
     return (
       <div className={this.props.classes.root}>
-        <Typography variant="h4" gutterBottom={true}>
+        <Typography variant="h2" gutterBottom={true}>
           Werewolf
         </Typography>
         <Typography variant="subtitle1" gutterBottom={true}>
           A party game with offline
         </Typography>
-        <form className={this.props.classes.formsWrapper} autoComplete="off">
+        <form className={this.props.classes.wrapper} autoComplete="off">
           <FormControl className={this.props.classes.formControl}>
             <InputLabel>Numbers of Players</InputLabel>
             <Select
@@ -152,6 +167,11 @@ class Index extends React.Component<AppProps> {
             </Select>
           </FormControl>
         </form>
+        <div className={this.props.classes.wrapper}>
+          <Button variant="outlined" onClick={this.handleOpenRole}>
+            Roles Setting
+          </Button>
+        </div>
         <this.RoleDialog />
         <Button variant="extendedFab" color="primary" size="large">
           START

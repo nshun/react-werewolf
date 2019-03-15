@@ -4,5 +4,5 @@
 
 # References
 
-- https://facebook.github.io/create-react-app/docs/
+- https://facebook.github.io/create-react-app/
 - https://material-ui.com/guides/typescript/#typescript
