@@ -3,16 +3,21 @@ import { connect } from "react-redux";
 
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControl,
-  Input,
   InputLabel,
-  NativeSelect,
+  MenuItem,
+  Select,
   Typography
 } from "@material-ui/core";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
+import NumberMenuItems from "../components/NumberMenuItems";
 import { AppState } from "../store";
 import { updateSetting } from "../store/setting/actions";
 import { Setting } from "../store/setting/types";
@@ -43,14 +48,15 @@ interface AppProps extends WithStyles<typeof styles> {
 
 class Index extends React.Component<AppProps> {
   public state = {
+    open: false,
     players: this.props.setting.players,
-    villagers: this.props.setting.villagers,
-    werewolves: this.props.setting.werewolves
+    werewolves: 0
   };
+
   public updateSetting = () => {
     const newSetting: Setting = {
       players: this.state.players,
-      villagers: this.state.villagers,
+      villagers: this.state.players - this.state.werewolves,
       werewolves: this.state.werewolves
     };
     this.props.updateSetting(newSetting);
@@ -58,13 +64,73 @@ class Index extends React.Component<AppProps> {
   public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     switch (evt.target.name) {
       case "players":
-        return this.setState({ players: parseInt(evt.target.value, 10) });
-      case "villagers":
-        return this.setState({ villagers: parseInt(evt.target.value, 10) });
-      case "werewolves":
-        return this.setState({ werewolves: parseInt(evt.target.value, 10) });
+        return this.setState({
+          ...this.state,
+          open: true,
+          players: Number(evt.target.value),
+          werewolves: Math.max(1, Math.floor(Number(evt.target.value) / 3))
+        });
+      default:
+        return this.setState({
+          ...this.state,
+          [evt.target.name]: Number(evt.target.value)
+        });
     }
   };
+  public handleClickOpen = () => this.setState({ ...this.state, open: true });
+  public handleCancel = () => this.setState({ ...this.state, open: false });
+  public handleOk = () => {
+    this.updateSetting();
+    this.setState({ ...this.state, open: false });
+  };
+
+  public RoleDialog = () => {
+    const villagers = this.state.players - this.state.werewolves;
+    return (
+      <Dialog
+        disableBackdropClick={true}
+        disableEscapeKeyDown={true}
+        open={this.state.open}
+        onClose={this.handleCancel}
+      >
+        <DialogTitle>Fill the form</DialogTitle>
+        <DialogContent className={this.props.classes.formsWrapper}>
+          <form>
+            <FormControl
+              className={this.props.classes.formControl}
+              disabled={true}
+            >
+              <InputLabel>The Villagers</InputLabel>
+              <Select name="villagers" value={villagers}>
+                <MenuItem value={villagers}>{villagers}</MenuItem>
+              </Select>
+            </FormControl>
+          </form>
+          <form>
+            <FormControl className={this.props.classes.formControl}>
+              <InputLabel>The Werewolves</InputLabel>
+              <Select
+                name="werewolves"
+                value={this.state.werewolves}
+                onChange={this.handleChange}
+              >
+                {NumberMenuItems(1, this.state.players - 1)}
+              </Select>
+            </FormControl>
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleCancel} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={this.handleOk} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  };
+
   public render() {
     return (
       <div className={this.props.classes.root}>
@@ -74,63 +140,20 @@ class Index extends React.Component<AppProps> {
         <Typography variant="subtitle1" gutterBottom={true}>
           A party game with offline
         </Typography>
-        <div className={this.props.classes.formsWrapper}>
-          <div>
-            <FormControl className={this.props.classes.formControl}>
-              <InputLabel htmlFor="age-native-helper">
-                Numbers of players
-              </InputLabel>
-              <NativeSelect
-                name="players"
-                onChange={this.handleChange}
-                input={<Input />}
-              >
-                <option value="" />
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
-              </NativeSelect>
-            </FormControl>
-          </div>
-          <div>
-            <FormControl className={this.props.classes.formControl}>
-              <InputLabel htmlFor="age-native-helper">The Villagers</InputLabel>
-              <NativeSelect
-                name="villagers"
-                onChange={this.handleChange}
-                input={<Input />}
-              >
-                <option value="" />
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
-              </NativeSelect>
-            </FormControl>
-          </div>
-          <div>
-            <FormControl className={this.props.classes.formControl}>
-              <InputLabel htmlFor="age-native-helper">
-                The Werewolves
-              </InputLabel>
-              <NativeSelect
-                name="werewolves"
-                onChange={this.handleChange}
-                input={<Input />}
-              >
-                <option value="" />
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
-              </NativeSelect>
-            </FormControl>
-          </div>
-        </div>
-        <Button
-          variant="extendedFab"
-          color="primary"
-          size="large"
-          onClick={this.updateSetting}
-        >
+        <form className={this.props.classes.formsWrapper} autoComplete="off">
+          <FormControl className={this.props.classes.formControl}>
+            <InputLabel>Numbers of Players</InputLabel>
+            <Select
+              name="players"
+              value={this.state.players}
+              onChange={this.handleChange}
+            >
+              {NumberMenuItems(2, 10)}
+            </Select>
+          </FormControl>
+        </form>
+        <this.RoleDialog />
+        <Button variant="extendedFab" color="primary" size="large">
           START
         </Button>
       </div>
