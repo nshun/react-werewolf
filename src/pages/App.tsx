@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import {
   Button,
   FormControl,
-  FormHelperText,
   Input,
   InputLabel,
   NativeSelect,
@@ -23,8 +22,10 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       textAlign: "center",
-      margin: theme.spacing.unit * 2,
-      paddingTop: theme.spacing.unit * 20
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translateY(-50%) translateX(-50%)"
     },
     formsWrapper: {
       margin: theme.spacing.unit * 2
