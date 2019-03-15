@@ -7,7 +7,7 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 
-import { ActionDispatcher } from "../container/AppContainer";
+import { ActionDispatcher } from "../containers/AppContainer";
 import { GameState } from "../reducers/counter";
 import withRoot from "../withRoot";
 

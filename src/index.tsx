@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import AppContainer from "./container/AppContainer";
+import AppContainer from "./containers/AppContainer";
 import "./index.css";
-import App from "./pages/App";
 import * as serviceWorker from "./serviceWorker";
 import store from "./store";
 
