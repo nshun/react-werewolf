@@ -38,7 +38,7 @@ const styles = (theme: Theme) =>
     },
     formControl: {
       margin: theme.spacing.unit,
-      minWidth: 200
+      minWidth: 150
     }
   });
 
