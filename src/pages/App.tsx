@@ -30,7 +30,7 @@ class Index extends React.Component<WithStyles<typeof styles>, {}> {
   public render() {
     return (
       <div className={this.props.classes.root}>
-        <Typography variant="h2" gutterBottom={true}>
+        <Typography variant="h1" gutterBottom={true}>
           Werewolf
         </Typography>
         <Typography variant="subtitle1" gutterBottom={true}>

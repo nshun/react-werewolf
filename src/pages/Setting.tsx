@@ -21,6 +21,8 @@ import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
 import NumberMenuItems from "../components/NumberMenuItems";
 import { AppState } from "../store";
+import { initPlayers } from "../store/players/actions";
+import { Players } from "../store/players/types";
 import { updateSetting } from "../store/setting/actions";
 import { Setting } from "../store/setting/types";
 import withRoot from "../withRoot";
@@ -44,13 +46,16 @@ const styles = (theme: Theme) =>
   });
 
 interface AppProps extends WithStyles<typeof styles> {
+  initPlayers: typeof initPlayers;
   updateSetting: typeof updateSetting;
   setting: Setting;
+  players: Players;
 }
 
 interface State {
   openName: boolean;
   openRole: boolean;
+  names: string[];
   players: number;
   werewolves: number;
 }
@@ -61,6 +66,7 @@ class Index extends React.Component<AppProps, State> {
     this.state = {
       openName: false,
       openRole: false,
+      names: this.props.players.players.map(val => val.name),
       players: this.props.setting.players,
       werewolves: Math.max(
         1,
@@ -76,6 +82,7 @@ class Index extends React.Component<AppProps, State> {
     };
     this.props.updateSetting(newSetting);
   };
+  public initPlayers = () => this.props.initPlayers(this.state.names);
   public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     switch (evt.target.name) {
       case "players":
@@ -92,6 +99,15 @@ class Index extends React.Component<AppProps, State> {
         });
     }
   };
+  public handleNameChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+    const names = this.state.names;
+    const set = Number(evt.target.name);
+    names[set] = evt.target.value;
+    return this.setState({
+      ...this.state,
+      names
+    });
+  };
   public handleOpenName = () =>
     this.setState({ ...this.state, openName: true });
   public handleOpenRole = () =>
@@ -99,12 +115,13 @@ class Index extends React.Component<AppProps, State> {
   public handleCancel = () =>
     this.setState({ ...this.state, openName: false, openRole: false });
   public handleOk = () => {
+    this.initPlayers();
     this.updateSetting();
     this.handleCancel();
   };
 
   public NameDialog = () => {
-    const nums = new Array(this.state.players);
+    const nums = new Array<number>(this.state.players);
     for (let i = 0; i < nums.length; i++) {
       nums[i] = i + 1;
     }
@@ -115,7 +132,12 @@ class Index extends React.Component<AppProps, State> {
           {nums.map((item, i) => {
             return (
               <div key={i} className={this.props.classes.wrapper}>
-                <TextField label={`Player ${item}`} />
+                <TextField
+                  name={String(i)}
+                  value={this.state.names[i]}
+                  label={`Player ${item}`}
+                  onChange={this.handleNameChange}
+                />
               </div>
             );
           })}
@@ -205,25 +227,28 @@ class Index extends React.Component<AppProps, State> {
           </Button>
         </div>
         <this.RoleDialog />
-        <Button
-          component={Link}
-          {...{ to: "/" } as any}
-          variant="extendedFab"
-          color="primary"
-          size="large"
-        >
-          START
-        </Button>
+        <div className={this.props.classes.wrapper}>
+          <Button
+            component={Link}
+            {...{ to: "/" } as any}
+            variant="extendedFab"
+            color="primary"
+            size="large"
+          >
+            START
+          </Button>
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
-  setting: state.setting
+  setting: state.setting,
+  players: state.players
 });
 
 export default connect(
   mapStateToProps,
-  { updateSetting }
+  { updateSetting, initPlayers }
 )(withRoot(withStyles(styles)(Index)));

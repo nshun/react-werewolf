@@ -7,8 +7,19 @@ import {
   UPDATE_PLAYERS
 } from "./types";
 
-const initialPlayer: Player = { name: "", role: Roles.villager };
-const initialState: Players = { players: [initialPlayer] };
+const initPlayers = (num: number): Players => {
+  const arr = new Array<string>(num);
+  for (let i = 0; i < num; i++) {
+    arr[i] = "";
+  }
+  return {
+    players: arr.map(() => {
+      return { name: "", role: Roles.villager };
+    })
+  };
+};
+
+const initialState: Players = initPlayers(12);
 
 export default function settingReducer(
   state = initialState,
