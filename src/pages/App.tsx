@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-import { Button, Typography } from "@material-ui/core";
+import { Fab, Typography } from "@material-ui/core";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
@@ -37,15 +37,15 @@ class Index extends React.Component<WithStyles<typeof styles>, {}> {
           A party game with offline
         </Typography>
         <div className={this.props.classes.wrapper}>
-          <Button
+          <Fab
             component={Link}
             {...{ to: "/setting" } as any}
-            variant="extendedFab"
+            variant="extended"
             color="primary"
             size="large"
           >
             START
-          </Button>
+          </Fab>
         </div>
       </div>
     );

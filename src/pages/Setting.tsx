@@ -8,6 +8,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Fab,
   FormControl,
   InputLabel,
   MenuItem,
@@ -228,15 +229,15 @@ class Index extends React.Component<AppProps, State> {
         </div>
         <this.RoleDialog />
         <div className={this.props.classes.wrapper}>
-          <Button
+          <Fab
             component={Link}
             {...{ to: "/" } as any}
-            variant="extendedFab"
+            variant="extended"
             color="primary"
             size="large"
           >
             START
-          </Button>
+          </Fab>
         </div>
       </div>
     );
