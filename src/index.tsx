@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 
 import "./index.css";
 
 import App from "./pages/App";
+import Setting from "./pages/Setting";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./store";
 
@@ -12,7 +14,10 @@ const store = configureStore();
 
 const Root = () => (
   <Provider store={store}>
-    <App />
+    <Router>
+      <Route exact={true} path="/" component={App} />
+      <Route path="/setting" component={Setting} />
+    </Router>
   </Provider>
 );
 

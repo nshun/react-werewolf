@@ -1,8 +1,10 @@
 import { combineReducers, createStore } from "redux";
+import playersReducer from "./players/reducers";
 import settingReducer from "./setting/reducers";
 
 const rootReducer = combineReducers({
-  setting: settingReducer
+  setting: settingReducer,
+  players: playersReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
