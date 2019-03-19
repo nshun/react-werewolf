@@ -22,8 +22,8 @@ import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
 import NumberMenuItems from "../components/NumberMenuItems";
 import { AppState } from "../store";
-import { initPlayers } from "../store/players/actions";
-import { Players } from "../store/players/types";
+import { initPlayers } from "../store/game/actions";
+import { Players } from "../store/game/types";
 import { updateSetting } from "../store/setting/actions";
 import { Setting } from "../store/setting/types";
 import withRoot from "../withRoot";
@@ -246,7 +246,7 @@ class Index extends React.Component<AppProps, State> {
 
 const mapStateToProps = (state: AppState) => ({
   setting: state.setting,
-  players: state.players
+  players: state.game
 });
 
 export default connect(

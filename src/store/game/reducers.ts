@@ -1,7 +1,7 @@
 import {
+  GameActionTypes,
   INIT_PLAYERS,
   Player,
-  PlayerActionTypes,
   Players,
   Roles,
   UPDATE_PLAYERS
@@ -21,9 +21,9 @@ const initPlayers = (num: number): Players => {
 
 const initialState: Players = initPlayers(12);
 
-export default function settingReducer(
+export default function gameReducer(
   state = initialState,
-  action: PlayerActionTypes
+  action: GameActionTypes
 ): Players {
   switch (action.type) {
     case INIT_PLAYERS:

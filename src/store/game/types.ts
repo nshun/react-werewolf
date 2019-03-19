@@ -25,4 +25,4 @@ interface UpdatePlayersAction {
   players: Players;
 }
 
-export type PlayerActionTypes = InitPlayersAction | UpdatePlayersAction;
+export type GameActionTypes = InitPlayersAction | UpdatePlayersAction;
