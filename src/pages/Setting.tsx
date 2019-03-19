@@ -231,7 +231,7 @@ class Index extends React.Component<AppProps, State> {
         <div className={this.props.classes.wrapper}>
           <Fab
             component={Link}
-            {...{ to: "/" } as any}
+            {...{ to: "/night" } as any}
             variant="extended"
             color="primary"
             size="large"
