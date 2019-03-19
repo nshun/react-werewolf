@@ -31,7 +31,7 @@ class Noon extends React.Component<WithStyles<typeof styles>, {}> {
     return (
       <div className={this.props.classes.root}>
         <Typography variant="h2" gutterBottom={true}>
-          noon
+          Noon
         </Typography>
         <Typography variant="subtitle1" gutterBottom={true}>
           It became noon.
