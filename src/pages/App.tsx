@@ -44,7 +44,7 @@ class Index extends React.Component<WithStyles<typeof styles>, {}> {
             color="primary"
             size="large"
           >
-            START
+            PLAY
           </Fab>
         </div>
       </div>
