@@ -7,7 +7,7 @@ import {
   UPDATE_PLAYERS
 } from "./types";
 
-const initPlayers = (num: number): Players => {
+const initialPlayers = (num: number): Players => {
   const arr = new Array<string>(num);
   for (let i = 0; i < num; i++) {
     arr[i] = "";
@@ -19,7 +19,7 @@ const initPlayers = (num: number): Players => {
   };
 };
 
-const initialState: Players = initPlayers(12);
+const initialState: Players = initialPlayers(12);
 
 export default function gameReducer(
   state = initialState,

@@ -83,7 +83,11 @@ class Index extends React.Component<AppProps, State> {
     };
     this.props.updateSetting(newSetting);
   };
-  public initPlayers = () => this.props.initPlayers(this.state.names);
+  public initPlayers = () =>
+    this.props.initPlayers(this.state.names, [
+      this.state.players - this.state.werewolves,
+      this.state.werewolves
+    ]);
   public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     switch (evt.target.name) {
       case "players":
@@ -115,10 +119,10 @@ class Index extends React.Component<AppProps, State> {
     this.setState({ ...this.state, openRole: true });
   public handleCancel = () =>
     this.setState({ ...this.state, openName: false, openRole: false });
-  public handleOk = () => {
+  public handleOk = () => this.handleCancel();
+  public handleStart = () => {
     this.initPlayers();
     this.updateSetting();
-    this.handleCancel();
   };
 
   public NameDialog = () => {
@@ -230,6 +234,7 @@ class Index extends React.Component<AppProps, State> {
         <this.RoleDialog />
         <div className={this.props.classes.wrapper}>
           <Fab
+            onClick={this.handleStart}
             component={Link}
             {...{ to: "/night" } as any}
             variant="extended"
