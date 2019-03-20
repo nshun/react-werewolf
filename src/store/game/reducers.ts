@@ -1,40 +1,39 @@
 import {
+  Game,
   GameActionTypes,
   INIT_PLAYERS,
-  Player,
-  Players,
   Roles,
   UPDATE_PLAYERS
 } from "./types";
 
-const initialPlayers = (num: number): Players => {
+const initState = (num: number): Game => {
   const arr = new Array<string>(num);
   for (let i = 0; i < num; i++) {
     arr[i] = "";
   }
   return {
-    players: arr.map(() => {
-      return { name: "", role: Roles.villager };
+    players: arr.map((val, i) => {
+      return { name: `Player ${i + 1}`, role: Roles.villager };
     })
   };
 };
 
-const initialState: Players = initialPlayers(12);
+const initialState: Game = initState(6);
 
 export default function gameReducer(
   state = initialState,
   action: GameActionTypes
-): Players {
+): Game {
   switch (action.type) {
     case INIT_PLAYERS:
       return {
         ...state,
-        ...action.players
+        ...action.game
       };
     case UPDATE_PLAYERS:
       return {
         ...state,
-        ...action.players
+        ...action.game
       };
     default:
       return state;

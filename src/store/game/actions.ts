@@ -1,5 +1,12 @@
 import shuffle from "../../utils/shuffle";
-import { INIT_PLAYERS, Player, Players, Roles, UPDATE_PLAYERS } from "./types";
+import {
+  Game,
+  GameActionTypes,
+  INIT_PLAYERS,
+  Player,
+  Roles,
+  UPDATE_PLAYERS
+} from "./types";
 
 function createRoles(nums: number[]) {
   let sum = 0;
@@ -18,21 +25,24 @@ function createRoles(nums: number[]) {
   return roles;
 }
 
-export const initPlayers = (names: string[], roleNums: number[]) => {
+export const initPlayers = (
+  names: string[],
+  roleNums: number[]
+): GameActionTypes => {
   const roles = shuffle(createRoles(roleNums));
   return {
     type: INIT_PLAYERS,
-    players: {
+    game: {
       players: names.map(
         (val, i): Player => {
-          return { name: val, role: roles[i] };
+          return { name: val || `Player ${i + 1}`, role: roles[i] };
         }
       )
     }
   };
 };
 
-export const updatePlayers = (newPlayers: Players) => ({
+export const updatePlayers = (newState: Game): GameActionTypes => ({
   type: UPDATE_PLAYERS,
-  players: newPlayers
+  game: newState
 });

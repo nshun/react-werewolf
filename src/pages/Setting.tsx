@@ -23,7 +23,7 @@ import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import NumberMenuItems from "../components/NumberMenuItems";
 import { AppState } from "../store";
 import { initPlayers } from "../store/game/actions";
-import { Players } from "../store/game/types";
+import { Game } from "../store/game/types";
 import { updateSetting } from "../store/setting/actions";
 import { Setting } from "../store/setting/types";
 import withRoot from "../withRoot";
@@ -50,7 +50,7 @@ interface AppProps extends WithStyles<typeof styles> {
   initPlayers: typeof initPlayers;
   updateSetting: typeof updateSetting;
   setting: Setting;
-  players: Players;
+  game: Game;
 }
 
 interface State {
@@ -64,10 +64,11 @@ interface State {
 class Index extends React.Component<AppProps, State> {
   constructor(props: Readonly<AppProps>) {
     super(props);
+    console.log(this.props);
     this.state = {
       openName: false,
       openRole: false,
-      names: this.props.players.players.map(val => val.name),
+      names: this.props.game.players.map(val => val.name),
       players: this.props.setting.players,
       werewolves: Math.max(
         1,
@@ -251,7 +252,7 @@ class Index extends React.Component<AppProps, State> {
 
 const mapStateToProps = (state: AppState) => ({
   setting: state.setting,
-  players: state.game
+  game: state.game
 });
 
 export default connect(

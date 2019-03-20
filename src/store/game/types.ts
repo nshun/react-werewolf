@@ -8,7 +8,7 @@ export interface Player {
   role: Roles;
 }
 
-export interface Players {
+export interface Game {
   players: Player[];
 }
 
@@ -17,12 +17,12 @@ export const UPDATE_PLAYERS = "UPDATE_PLAYERS";
 
 interface InitPlayersAction {
   type: typeof INIT_PLAYERS;
-  players: Players;
+  game: Game;
 }
 
 interface UpdatePlayersAction {
   type: typeof UPDATE_PLAYERS;
-  players: Players;
+  game: Game;
 }
 
 export type GameActionTypes = InitPlayersAction | UpdatePlayersAction;
