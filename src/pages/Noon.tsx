@@ -115,11 +115,7 @@ class Noon extends React.Component<AppProps, State> {
           ))}
         </Stepper>
         {this.state.activeStep === this.props.game.players.length && (
-          <Paper
-            square={true}
-            elevation={0}
-            className={this.props.classes.wrapper}
-          >
+          <div className={this.props.classes.stepper}>
             <Typography>All steps completed - you&apos;re finished</Typography>
             <div className={this.props.classes.wrapper}>
               <Fab
@@ -132,7 +128,7 @@ class Noon extends React.Component<AppProps, State> {
                 NEXT
               </Fab>
             </div>
-          </Paper>
+          </div>
         )}
       </div>
     );
