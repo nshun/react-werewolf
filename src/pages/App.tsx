@@ -28,15 +28,17 @@ const styles = (theme: Theme) =>
 
 class Index extends React.Component<WithStyles<typeof styles>, {}> {
   public render() {
+    const { classes } = this.props;
+
     return (
-      <div className={this.props.classes.root}>
+      <div className={classes.root}>
         <Typography variant="h1" gutterBottom={true}>
           Werewolf
         </Typography>
         <Typography variant="subtitle1" gutterBottom={true}>
           A party game with offline
         </Typography>
-        <div className={this.props.classes.wrapper}>
+        <div className={classes.wrapper}>
           <Fab
             component={Link}
             {...{ to: "/setting" } as any}
