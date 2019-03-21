@@ -69,33 +69,36 @@ class Noon extends React.Component<AppProps, State> {
     this.setState({ ...this.state, activeStep: step });
 
   public render() {
+    const { classes, game } = this.props;
+    const { activeStep } = this.state;
+
     return (
-      <div className={this.props.classes.root}>
+      <div className={classes.root}>
         <Typography variant="h2" gutterBottom={true}>
           Noon
         </Typography>
         <Stepper
-          className={this.props.classes.stepper}
-          activeStep={this.state.activeStep}
+          className={classes.stepper}
+          activeStep={activeStep}
           orientation="vertical"
         >
-          {this.props.game.players.map((player, index) => (
+          {game.players.map((player, index) => (
             <Step key={String(player)}>
               <StepLabel
-                className={this.props.classes.stepLabel}
+                className={classes.stepLabel}
                 // tslint:disable-next-line: jsx-no-lambda
                 onClick={() => this.setActiveStep(index)}
               >
                 {player.name}
               </StepLabel>
               <StepContent>
-                <div className={this.props.classes.content}>
+                <div className={classes.content}>
                   <VoteDialog player={player} />
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={this.handleNext}
-                    className={this.props.classes.wrapper}
+                    className={classes.wrapper}
                   >
                     {"Next"}
                   </Button>
@@ -104,10 +107,10 @@ class Noon extends React.Component<AppProps, State> {
             </Step>
           ))}
         </Stepper>
-        {this.state.activeStep === this.props.game.players.length && (
-          <div className={this.props.classes.stepper}>
+        {activeStep === game.players.length && (
+          <div className={classes.stepper}>
             <Typography>All steps completed - you&apos;re finished</Typography>
-            <div className={this.props.classes.wrapper}>
+            <div className={classes.wrapper}>
               <Fab
                 component={Link}
                 {...{ to: "/night" } as any}

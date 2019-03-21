@@ -41,27 +41,30 @@ class ActionDialog extends React.Component<Props, State> {
   public handleClose = () => this.setState({ ...this.state, open: false });
 
   public render() {
+    const { classes, player } = this.props;
+    const { open } = this.state;
+
     return (
-      <div className={this.props.classes.wrapper}>
+      <div className={classes.wrapper}>
         <Button
           variant="outlined"
           color="primary"
           onClick={this.handleClickOpen}
-          className={this.props.classes.openButton}
+          className={classes.openButton}
         >
-          {this.props.player.name} Action
+          Action: {player.name}
         </Button>
         <Dialog
-          open={this.state.open}
+          open={open}
           keepMounted={true}
           onClose={this.handleClose}
           aria-labelledby="dialog-title"
           aria-describedby="dialog-description"
         >
-          <DialogTitle id="dialog-title">{this.props.player.name}</DialogTitle>
+          <DialogTitle id="dialog-title">{player.name}</DialogTitle>
           <DialogContent>
             <DialogContentText id="dialog-description">
-              You are the {Roles[this.props.player.role]}
+              You are the {Roles[player.role]}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
