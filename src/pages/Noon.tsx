@@ -16,7 +16,6 @@ import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
-import CheckRolePopover from "../components/CheckRolePopover";
 import { AppState } from "../store";
 import { Game, Roles } from "../store/game/types";
 import withRoot from "../withRoot";
@@ -104,7 +103,6 @@ class Noon extends React.Component<AppProps, State> {
               </StepLabel>
               <StepContent>
                 <div className={this.props.classes.content}>
-                  <CheckRolePopover player={player} />
                   <Button
                     variant="contained"
                     color="primary"
