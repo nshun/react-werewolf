@@ -62,22 +62,8 @@ class Night extends React.Component<AppProps, State> {
     };
   }
 
-  public getStepContent(role: Roles) {
-    switch (role) {
-      case Roles.villager:
-        return `You are ${Roles[role]}`;
-      case Roles.werewolf:
-        return `You are ${Roles[role]}`;
-      default:
-        return `You are ${role}`;
-    }
-  }
-
   public handleNext = () =>
     this.setState({ ...this.state, activeStep: this.state.activeStep + 1 });
-
-  public handleBack = () =>
-    this.setState({ ...this.state, activeStep: this.state.activeStep - 1 });
 
   public setActiveStep = (step: number) =>
     this.setState({ ...this.state, activeStep: step });
