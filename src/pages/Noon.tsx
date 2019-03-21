@@ -16,6 +16,7 @@ import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
+import CheckRolePopover from "../components/CheckRolePopover";
 import { AppState } from "../store";
 import { Game, Roles } from "../store/game/types";
 import withRoot from "../withRoot";
@@ -35,6 +36,11 @@ const styles = (theme: Theme) =>
     },
     stepper: {
       backgroundColor: "transparent"
+    },
+    content: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center"
     },
     stepLabel: {
       textAlign: "left"
@@ -97,18 +103,16 @@ class Noon extends React.Component<AppProps, State> {
                 {player.name}
               </StepLabel>
               <StepContent>
-                <Typography>{`You are ${Roles[player.role]}`}</Typography>
-                <div className={this.props.classes.wrapper}>
-                  <div>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleNext}
-                      className={this.props.classes.wrapper}
-                    >
-                      {"Next"}
-                    </Button>
-                  </div>
+                <div className={this.props.classes.content}>
+                  <CheckRolePopover player={player} />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleNext}
+                    className={this.props.classes.wrapper}
+                  >
+                    {"Next"}
+                  </Button>
                 </div>
               </StepContent>
             </Step>

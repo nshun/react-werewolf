@@ -64,7 +64,6 @@ interface State {
 class Index extends React.Component<AppProps, State> {
   constructor(props: Readonly<AppProps>) {
     super(props);
-    console.log(this.props);
     this.state = {
       openName: false,
       openRole: false,
