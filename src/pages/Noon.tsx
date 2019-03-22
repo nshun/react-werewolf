@@ -19,7 +19,8 @@ import {
 
 import VoteDialog from "../components/VoteDialog";
 import { AppState } from "../store";
-import { Game } from "../store/game/types";
+import { tickTime } from "../store/game/actions";
+import { Game, Time } from "../store/game/types";
 import withRoot from "../withRoot";
 
 const styles = (theme: Theme) =>
@@ -48,6 +49,7 @@ const styles = (theme: Theme) =>
     }
   });
 interface AppProps extends WithStyles<typeof styles> {
+  tickTime: typeof tickTime;
   game: Game;
 }
 
@@ -68,6 +70,8 @@ class Noon extends React.Component<AppProps, State> {
 
   public setActiveStep = (step: number) =>
     this.setState({ ...this.state, activeStep: step });
+
+  public tickTime = () => this.props.tickTime(this.props.game.date, Time.night);
 
   public render() {
     const { classes, game } = this.props;
@@ -116,6 +120,7 @@ class Noon extends React.Component<AppProps, State> {
             <Typography>All steps completed - you&apos;re finished</Typography>
             <div className={classes.wrapper}>
               <Fab
+                onClick={this.tickTime}
                 component={Link}
                 {...{ to: "/night" } as any}
                 variant="extended"
@@ -137,5 +142,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { tickTime }
 )(withRoot(withStyles(styles)(Noon)));
