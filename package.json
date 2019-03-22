@@ -7,8 +7,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier src/**/*.{js,ts,tsx,json,css} --write",
-    "tslint": "prettier src/**/*.{js,ts,tsx,json,css} --write",
+    "prettier": "prettier --write src/**/*.{js,ts,tsx,json,css}",
+    "tslint": "tslint --fix --force --format stylish --project ./tsconfig.json src/**/*.{js,ts,tsx,json,css}",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
   "repository": {
@@ -48,6 +48,10 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
     "tslint-react": "^3.6.0"
+  },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "es5"
   },
   "husky": {
     "hooks": {
