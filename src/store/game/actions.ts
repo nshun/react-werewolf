@@ -1,10 +1,12 @@
 import shuffle from "../../utils/shuffle";
 import {
-  Game,
   GameActionTypes,
+  GameDate,
   INIT_PLAYERS,
   Player,
   Roles,
+  TICK_TIME,
+  Time,
   UPDATE_PLAYERS,
   VOTE_PLAYER
 } from "./types";
@@ -33,24 +35,22 @@ export const initPlayers = (
   const roles = shuffle(createRoles(roleNums));
   return {
     type: INIT_PLAYERS,
-    game: {
-      players: names.map(
-        (val, i): Player => {
-          return {
-            id: i,
-            name: val || `Player ${i + 1}`,
-            role: roles[i],
-            voteId: undefined
-          };
-        }
-      )
-    }
+    players: roles.map(
+      (val, i): Player => {
+        return {
+          id: i,
+          name: names[i] || `Player ${i + 1}`,
+          role: val,
+          voteId: undefined
+        };
+      }
+    )
   };
 };
 
-export const updatePlayers = (newState: Game): GameActionTypes => ({
+export const updatePlayers = (newState: Player[]): GameActionTypes => ({
   type: UPDATE_PLAYERS,
-  game: newState
+  players: newState
 });
 
 export const votePlayer = (
@@ -60,13 +60,21 @@ export const votePlayer = (
 ): GameActionTypes => {
   return {
     type: VOTE_PLAYER,
-    game: {
-      players: players.map(player => {
-        if (player.id === id) {
-          player.voteId = voteId;
-        }
-        return player;
-      })
+    players: players.map(player => {
+      if (player.id === id) {
+        player.voteId = voteId;
+      }
+      return player;
+    })
+  };
+};
+
+export const tickTime = (date: GameDate, nextTime: Time): GameActionTypes => {
+  return {
+    type: TICK_TIME,
+    date: {
+      day: nextTime === Time.night ? date.day : date.day + 1,
+      time: nextTime
     }
   };
 };

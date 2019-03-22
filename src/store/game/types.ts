@@ -3,6 +3,11 @@ export enum Roles {
   werewolf
 }
 
+export enum Time {
+  night,
+  noon
+}
+
 export interface Player {
   id: number;
   name: string;
@@ -10,30 +15,43 @@ export interface Player {
   voteId: number | undefined;
 }
 
+export interface GameDate {
+  day: number;
+  time: Time;
+}
+
 export interface Game {
   players: Player[];
+  date: GameDate;
 }
 
 export const INIT_PLAYERS = "INIT_PLAYERS";
 export const UPDATE_PLAYERS = "UPDATE_PLAYERS";
 export const VOTE_PLAYER = "VOTE_PLAYER";
+export const TICK_TIME = "TICK_TIME";
 
 interface InitPlayersAction {
   type: typeof INIT_PLAYERS;
-  game: Game;
+  players: Player[];
 }
 
 interface UpdatePlayersAction {
   type: typeof UPDATE_PLAYERS;
-  game: Game;
+  players: Player[];
 }
 
 interface VotePlayerAction {
   type: typeof VOTE_PLAYER;
-  game: Game;
+  players: Player[];
+}
+
+interface TickTimeAction {
+  type: typeof TICK_TIME;
+  date: GameDate;
 }
 
 export type GameActionTypes =
   | InitPlayersAction
   | UpdatePlayersAction
-  | VotePlayerAction;
+  | VotePlayerAction
+  | TickTimeAction;

@@ -77,6 +77,9 @@ class Night extends React.Component<AppProps, State> {
         <Typography variant="h2" gutterBottom={true}>
           Night
         </Typography>
+        <Typography variant="subtitle1" gutterBottom={true}>
+          Day {this.props.game.date.day}
+        </Typography>
         <Stepper
           className={classes.stepper}
           activeStep={activeStep}

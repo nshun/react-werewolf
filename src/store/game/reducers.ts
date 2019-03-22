@@ -3,7 +3,10 @@ import {
   GameActionTypes,
   INIT_PLAYERS,
   Roles,
-  UPDATE_PLAYERS
+  TICK_TIME,
+  Time,
+  UPDATE_PLAYERS,
+  VOTE_PLAYER
 } from "./types";
 
 const initState = (num: number): Game => {
@@ -15,11 +18,15 @@ const initState = (num: number): Game => {
     players: arr.map((val, i) => {
       return {
         id: i,
-        name: `Player ${i + 1}`,
+        name: "",
         role: Roles.villager,
         voteId: undefined
       };
-    })
+    }),
+    date: {
+      day: 0,
+      time: Time.night
+    }
   };
 };
 
@@ -33,12 +40,22 @@ export default function gameReducer(
     case INIT_PLAYERS:
       return {
         ...state,
-        ...action.game
+        players: [...action.players]
       };
     case UPDATE_PLAYERS:
       return {
         ...state,
-        ...action.game
+        players: [...action.players]
+      };
+    case VOTE_PLAYER:
+      return {
+        ...state,
+        players: [...action.players]
+      };
+    case TICK_TIME:
+      return {
+        ...state,
+        date: action.date
       };
     default:
       return state;

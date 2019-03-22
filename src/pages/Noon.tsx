@@ -78,6 +78,9 @@ class Noon extends React.Component<AppProps, State> {
         <Typography variant="h2" gutterBottom={true}>
           Noon
         </Typography>
+        <Typography variant="subtitle1" gutterBottom={true}>
+          Day {this.props.game.date.day}
+        </Typography>
         <Stepper
           className={classes.stepper}
           activeStep={activeStep}
