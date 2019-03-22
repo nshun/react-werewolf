@@ -1,14 +1,26 @@
 import React from "react";
+import { connect } from "react-redux";
 
-import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import {
+  Button,
+  createStyles,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  ListItem,
+  ListItemText,
+  MenuItem,
+  Select,
+  Theme,
+  WithStyles,
+  withStyles
+} from "@material-ui/core";
 
-import { Player, Roles } from "../store/game/types";
+import { AppState } from "../store";
+import { votePlayer } from "../store/game/actions";
+import { Game, Player } from "../store/game/types";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -17,28 +29,72 @@ const styles = (theme: Theme) =>
     },
     openButton: {
       textTransform: "none"
+    },
+    select: {
+      minWidth: 150
     }
   });
 
 interface Props extends WithStyles<typeof styles> {
+  votePlayer: typeof votePlayer;
+  game: Game;
   player: Player;
 }
 
 interface State {
   open: boolean;
+  selectedId: number | null;
 }
 
 class VoteDialog extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      selectedId: null
     };
   }
+
+  public votePlayer = (voteId: number) => {
+    this.props.votePlayer(
+      this.props.game.players,
+      this.props.player.id,
+      voteId
+    );
+  };
 
   public handleClickOpen = () => this.setState({ ...this.state, open: true });
 
   public handleClose = () => this.setState({ ...this.state, open: false });
+
+  public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+    const voteId = Number(evt.target.value);
+    this.votePlayer(voteId);
+    this.setState({
+      ...this.state,
+      selectedId: voteId
+    });
+  };
+
+  public PlayerMenuItems = () => {
+    const players = this.props.game.players;
+    return (
+      <Select
+        name="werewolves"
+        value={this.props.player.voteId}
+        onChange={this.handleChange}
+        className={this.props.classes.select}
+      >
+        {players.map(player => {
+          return (
+            <MenuItem key={player.id} value={player.id}>
+              {player.name}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    );
+  };
 
   public render() {
     const { classes, player } = this.props;
@@ -64,12 +120,13 @@ class VoteDialog extends React.Component<Props, State> {
           <DialogTitle id="dialog-title">{player.name}</DialogTitle>
           <DialogContent>
             <DialogContentText id="dialog-description">
-              Vote for?
+              Vote for
             </DialogContentText>
+            <this.PlayerMenuItems />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Close
+              OK
             </Button>
           </DialogActions>
         </Dialog>
@@ -78,4 +135,11 @@ class VoteDialog extends React.Component<Props, State> {
   }
 }
 
-export default withStyles(styles)(VoteDialog);
+const mapStateToProps = (state: AppState) => ({
+  game: state.game
+});
+
+export default connect(
+  mapStateToProps,
+  { votePlayer }
+)(withStyles(styles)(VoteDialog));

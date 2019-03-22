@@ -5,7 +5,8 @@ import {
   INIT_PLAYERS,
   Player,
   Roles,
-  UPDATE_PLAYERS
+  UPDATE_PLAYERS,
+  VOTE_PLAYER
 } from "./types";
 
 function createRoles(nums: number[]) {
@@ -35,7 +36,12 @@ export const initPlayers = (
     game: {
       players: names.map(
         (val, i): Player => {
-          return { name: val || `Player ${i + 1}`, role: roles[i] };
+          return {
+            id: i,
+            name: val || `Player ${i + 1}`,
+            role: roles[i],
+            voteId: undefined
+          };
         }
       )
     }
@@ -46,3 +52,21 @@ export const updatePlayers = (newState: Game): GameActionTypes => ({
   type: UPDATE_PLAYERS,
   game: newState
 });
+
+export const votePlayer = (
+  players: Player[],
+  id: number,
+  voteId: number
+): GameActionTypes => {
+  return {
+    type: VOTE_PLAYER,
+    game: {
+      players: players.map(player => {
+        if (player.id === id) {
+          player.voteId = voteId;
+        }
+        return player;
+      })
+    }
+  };
+};

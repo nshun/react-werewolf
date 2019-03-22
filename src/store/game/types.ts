@@ -4,8 +4,10 @@ export enum Roles {
 }
 
 export interface Player {
+  id: number;
   name: string;
   role: Roles;
+  voteId: number | undefined;
 }
 
 export interface Game {
@@ -14,6 +16,7 @@ export interface Game {
 
 export const INIT_PLAYERS = "INIT_PLAYERS";
 export const UPDATE_PLAYERS = "UPDATE_PLAYERS";
+export const VOTE_PLAYER = "VOTE_PLAYER";
 
 interface InitPlayersAction {
   type: typeof INIT_PLAYERS;
@@ -25,4 +28,12 @@ interface UpdatePlayersAction {
   game: Game;
 }
 
-export type GameActionTypes = InitPlayersAction | UpdatePlayersAction;
+interface VotePlayerAction {
+  type: typeof VOTE_PLAYER;
+  game: Game;
+}
+
+export type GameActionTypes =
+  | InitPlayersAction
+  | UpdatePlayersAction
+  | VotePlayerAction;

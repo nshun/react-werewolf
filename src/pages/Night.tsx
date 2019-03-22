@@ -127,6 +127,7 @@ class Night extends React.Component<AppProps, State> {
     );
   }
 }
+
 const mapStateToProps = (state: AppState) => ({
   game: state.game
 });

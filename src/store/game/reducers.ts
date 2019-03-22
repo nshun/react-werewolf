@@ -13,7 +13,12 @@ const initState = (num: number): Game => {
   }
   return {
     players: arr.map((val, i) => {
-      return { name: `Player ${i + 1}`, role: Roles.villager };
+      return {
+        id: i,
+        name: `Player ${i + 1}`,
+        role: Roles.villager,
+        voteId: undefined
+      };
     })
   };
 };

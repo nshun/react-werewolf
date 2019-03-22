@@ -105,7 +105,7 @@ class Index extends React.Component<AppProps, State> {
     }
   };
   public handleNameChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    const names = this.state.names;
+    const { names } = this.state;
     const set = Number(evt.target.name);
     names[set] = evt.target.value;
     return this.setState({
