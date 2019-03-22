@@ -23,8 +23,8 @@ import {
 
 import NumberMenuItems from "../components/NumberMenuItems";
 import { AppState } from "../store";
-import { initPlayers } from "../store/game/actions";
-import { Game } from "../store/game/types";
+import { initPlayers, tickTime } from "../store/game/actions";
+import { Game, GameDate, Time } from "../store/game/types";
 import { updateSetting } from "../store/setting/actions";
 import { Setting } from "../store/setting/types";
 import withRoot from "../withRoot";
@@ -50,6 +50,7 @@ const styles = (theme: Theme) =>
 interface AppProps extends WithStyles<typeof styles> {
   initPlayers: typeof initPlayers;
   updateSetting: typeof updateSetting;
+  tickTime: typeof tickTime;
   setting: Setting;
   game: Game;
 }
@@ -89,6 +90,13 @@ class Index extends React.Component<AppProps, State> {
       this.state.players - this.state.werewolves,
       this.state.werewolves
     ]);
+  public tickTime = () => {
+    const initGameDate: GameDate = {
+      day: 0,
+      time: Time.night
+    };
+    this.props.tickTime(initGameDate, Time.night);
+  };
   public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     switch (evt.target.name) {
       case "players":
@@ -123,6 +131,7 @@ class Index extends React.Component<AppProps, State> {
   public handleOk = () => this.handleCancel();
   public handleStart = () => {
     this.initPlayers();
+    this.tickTime();
     this.updateSetting();
   };
 
@@ -257,5 +266,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { updateSetting, initPlayers }
+  { updateSetting, initPlayers, tickTime }
 )(withRoot(withStyles(styles)(Index)));
