@@ -82,7 +82,7 @@ class Night extends React.Component<AppProps, State> {
           Night
         </Typography>
         <Typography variant="subtitle1" gutterBottom={true}>
-          Day {this.props.game.date.day}
+          Day {game.date.day}
         </Typography>
         <Stepper
           className={classes.stepper}
