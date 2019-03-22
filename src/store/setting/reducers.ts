@@ -10,7 +10,7 @@ export default function settingReducer(
     case UPDATE_SETTINGS:
       return {
         ...state,
-        ...action.setting
+        ...action.setting,
       };
     default:
       return state;

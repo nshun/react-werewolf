@@ -13,7 +13,7 @@ import {
   Select,
   Theme,
   WithStyles,
-  withStyles
+  withStyles,
 } from "@material-ui/core";
 
 import { AppState } from "../store";
@@ -23,14 +23,14 @@ import { Game, Player } from "../store/game/types";
 const styles = (theme: Theme) =>
   createStyles({
     wrapper: {
-      margin: theme.spacing.unit * 2
+      margin: theme.spacing.unit * 2,
     },
     openButton: {
-      textTransform: "none"
+      textTransform: "none",
     },
     select: {
-      minWidth: 150
-    }
+      minWidth: 150,
+    },
   });
 
 interface Props extends WithStyles<typeof styles> {
@@ -49,7 +49,7 @@ class VoteDialog extends React.Component<Props, State> {
     super(props);
     this.state = {
       open: false,
-      selectedId: null
+      selectedId: null,
     };
   }
 
@@ -70,7 +70,7 @@ class VoteDialog extends React.Component<Props, State> {
     this.votePlayer(voteId);
     this.setState({
       ...this.state,
-      selectedId: voteId
+      selectedId: voteId,
     });
   };
 
@@ -134,7 +134,7 @@ class VoteDialog extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  game: state.game
+  game: state.game,
 });
 
 export default connect(

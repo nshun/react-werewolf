@@ -8,7 +8,7 @@ import {
   TICK_TIME,
   Time,
   UPDATE_PLAYERS,
-  VOTE_PLAYER
+  VOTE_PLAYER,
 } from "./types";
 
 function createRoles(nums: number[]) {
@@ -41,16 +41,16 @@ export const initPlayers = (
           id: i,
           name: names[i] || `Player ${i + 1}`,
           role: val,
-          voteId: undefined
+          voteId: undefined,
         };
       }
-    )
+    ),
   };
 };
 
 export const updatePlayers = (newState: Player[]): GameActionTypes => ({
   type: UPDATE_PLAYERS,
-  players: newState
+  players: newState,
 });
 
 export const votePlayer = (
@@ -65,7 +65,7 @@ export const votePlayer = (
         player.voteId = voteId;
       }
       return player;
-    })
+    }),
   };
 };
 
@@ -74,7 +74,7 @@ export const tickTime = (date: GameDate, nextTime: Time): GameActionTypes => {
     type: TICK_TIME,
     date: {
       day: nextTime === Time.night ? date.day : date.day + 1,
-      time: nextTime
-    }
+      time: nextTime,
+    },
   };
 };

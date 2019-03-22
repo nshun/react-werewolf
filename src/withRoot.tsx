@@ -8,11 +8,11 @@ import * as React from "react";
 const theme = createMuiTheme({
   palette: {
     primary: blue,
-    secondary: pink
+    secondary: pink,
   },
   typography: {
-    useNextVariants: true
-  }
+    useNextVariants: true,
+  },
 });
 
 function withRoot<P>(Component: React.ComponentType<P>) {

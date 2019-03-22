@@ -18,7 +18,7 @@ import {
   Theme,
   Typography,
   withStyles,
-  WithStyles
+  WithStyles,
 } from "@material-ui/core";
 
 import NumberMenuItems from "../components/NumberMenuItems";
@@ -36,15 +36,15 @@ const styles = (theme: Theme) =>
       position: "absolute",
       top: "50%",
       left: "50%",
-      transform: "translateY(-50%) translateX(-50%)"
+      transform: "translateY(-50%) translateX(-50%)",
     },
     wrapper: {
-      margin: theme.spacing.unit * 2
+      margin: theme.spacing.unit * 2,
     },
     formControl: {
       margin: theme.spacing.unit,
-      minWidth: 150
-    }
+      minWidth: 150,
+    },
   });
 
 interface AppProps extends WithStyles<typeof styles> {
@@ -74,26 +74,26 @@ class Index extends React.Component<AppProps, State> {
       werewolves: Math.max(
         1,
         Math.floor(Number(this.props.setting.players) / 3)
-      )
+      ),
     };
   }
   public updateSetting = () => {
     const newSetting: Setting = {
       players: this.state.players,
       villagers: this.state.players - this.state.werewolves,
-      werewolves: this.state.werewolves
+      werewolves: this.state.werewolves,
     };
     this.props.updateSetting(newSetting);
   };
   public initPlayers = () =>
     this.props.initPlayers(this.state.names, [
       this.state.players - this.state.werewolves,
-      this.state.werewolves
+      this.state.werewolves,
     ]);
   public tickTime = () => {
     const initGameDate: GameDate = {
       day: 0,
-      time: Time.night
+      time: Time.night,
     };
     this.props.tickTime(initGameDate, Time.night);
   };
@@ -104,12 +104,12 @@ class Index extends React.Component<AppProps, State> {
           ...this.state,
           openName: true,
           players: Number(evt.target.value),
-          werewolves: Math.max(1, Math.floor(Number(evt.target.value) / 3))
+          werewolves: Math.max(1, Math.floor(Number(evt.target.value) / 3)),
         });
       default:
         return this.setState({
           ...this.state,
-          [evt.target.name]: Number(evt.target.value)
+          [evt.target.name]: Number(evt.target.value),
         });
     }
   };
@@ -119,7 +119,7 @@ class Index extends React.Component<AppProps, State> {
     names[set] = evt.target.value;
     return this.setState({
       ...this.state,
-      names
+      names,
     });
   };
   public handleOpenName = () =>
@@ -261,7 +261,7 @@ class Index extends React.Component<AppProps, State> {
 
 const mapStateToProps = (state: AppState) => ({
   setting: state.setting,
-  game: state.game
+  game: state.game,
 });
 
 export default connect(

@@ -6,7 +6,7 @@ import {
   Theme,
   Typography,
   withStyles,
-  WithStyles
+  WithStyles,
 } from "@material-ui/core";
 
 const styles = (theme: Theme) =>
@@ -16,19 +16,19 @@ const styles = (theme: Theme) =>
       position: "absolute",
       top: "50%",
       left: "50%",
-      transform: "translateY(-50%) translateX(-50%)"
+      transform: "translateY(-50%) translateX(-50%)",
     },
     wrapper: {
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      padding: theme.spacing.unit * 5
+      padding: theme.spacing.unit * 5,
     },
     message: {
       textAlign: "right",
-      marginLeft: theme.spacing.unit * 2
-    }
+      marginLeft: theme.spacing.unit * 2,
+    },
   });
 
 function NouFound(props: WithStyles<typeof styles>) {

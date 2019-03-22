@@ -1,11 +1,11 @@
 export enum Roles {
   villager,
-  werewolf
+  werewolf,
 }
 
 export enum Time {
   night,
-  noon
+  noon,
 }
 
 export interface Player {

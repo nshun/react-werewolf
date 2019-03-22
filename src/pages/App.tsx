@@ -7,7 +7,7 @@ import {
   Theme,
   Typography,
   withStyles,
-  WithStyles
+  WithStyles,
 } from "@material-ui/core";
 
 import withRoot from "../withRoot";
@@ -19,15 +19,15 @@ const styles = (theme: Theme) =>
       position: "absolute",
       top: "50%",
       left: "50%",
-      transform: "translateY(-50%) translateX(-50%)"
+      transform: "translateY(-50%) translateX(-50%)",
     },
     wrapper: {
-      margin: theme.spacing.unit * 2
+      margin: theme.spacing.unit * 2,
     },
     formControl: {
       margin: theme.spacing.unit,
-      minWidth: 150
-    }
+      minWidth: 150,
+    },
   });
 
 class Index extends React.Component<WithStyles<typeof styles>, {}> {

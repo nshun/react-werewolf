@@ -10,7 +10,7 @@ import {
   DialogTitle,
   Theme,
   WithStyles,
-  withStyles
+  withStyles,
 } from "@material-ui/core";
 
 import { Player, Roles } from "../store/game/types";
@@ -18,11 +18,11 @@ import { Player, Roles } from "../store/game/types";
 const styles = (theme: Theme) =>
   createStyles({
     wrapper: {
-      margin: theme.spacing.unit * 2
+      margin: theme.spacing.unit * 2,
     },
     openButton: {
-      textTransform: "none"
-    }
+      textTransform: "none",
+    },
   });
 
 interface Props extends WithStyles<typeof styles> {
@@ -37,7 +37,7 @@ class ActionDialog extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
   }
 

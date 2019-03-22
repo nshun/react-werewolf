@@ -13,7 +13,7 @@ import {
   Theme,
   Typography,
   withStyles,
-  WithStyles
+  WithStyles,
 } from "@material-ui/core";
 
 import ActionDialog from "../components/ActionDialog";
@@ -30,22 +30,22 @@ const styles = (theme: Theme) =>
       top: "50%",
       left: "50%",
       width: "90%",
-      transform: "translateY(-50%) translateX(-50%)"
+      transform: "translateY(-50%) translateX(-50%)",
     },
     wrapper: {
-      margin: theme.spacing.unit * 2
+      margin: theme.spacing.unit * 2,
     },
     stepper: {
-      backgroundColor: "transparent"
+      backgroundColor: "transparent",
     },
     content: {
       display: "flex",
       flexDirection: "row",
-      justifyContent: "center"
+      justifyContent: "center",
     },
     stepLabel: {
-      textAlign: "left"
-    }
+      textAlign: "left",
+    },
   });
 interface AppProps extends WithStyles<typeof styles> {
   tickTime: typeof tickTime;
@@ -60,7 +60,7 @@ class Night extends React.Component<AppProps, State> {
   constructor(props: Readonly<AppProps>) {
     super(props);
     this.state = {
-      activeStep: 0
+      activeStep: 0,
     };
   }
 
@@ -137,7 +137,7 @@ class Night extends React.Component<AppProps, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  game: state.game
+  game: state.game,
 });
 
 export default connect(
