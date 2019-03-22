@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 
 import "./index.css";
 
@@ -12,16 +13,18 @@ import Setting from "./pages/Setting";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./store";
 
-const store = configureStore();
+const { store, persistor } = configureStore();
 
 const Root = () => (
   <Provider store={store}>
-    <Router>
-      <Route exact={true} path="/" component={App} />
-      <Route path="/night" component={Night} />
-      <Route path="/noon" component={Noon} />
-      <Route path="/setting" component={Setting} />
-    </Router>
+    <PersistGate loading={null} persistor={persistor}>
+      <Router>
+        <Route exact={true} path="/" component={App} />
+        <Route path="/night" component={Night} />
+        <Route path="/noon" component={Noon} />
+        <Route path="/setting" component={Setting} />
+      </Router>
+    </PersistGate>
   </Provider>
 );
 

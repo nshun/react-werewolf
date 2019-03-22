@@ -1,19 +1,24 @@
-import { combineReducers, createStore } from "redux";
-import gameReducer from "./game/reducers";
-import settingReducer from "./setting/reducers";
+import { createStore } from "redux";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-const rootReducer = combineReducers({
-  setting: settingReducer,
-  game: gameReducer
-});
+import { rootReducer } from "./reducers";
 
-export type AppState = ReturnType<typeof rootReducer>;
+const persistConfig = {
+  key: "root",
+  storage
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export type AppState = ReturnType<typeof persistedReducer>;
 
 export default function configureStore() {
   const store = createStore(
-    rootReducer,
+    persistedReducer,
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
       (window as any).__REDUX_DEVTOOLS_EXTENSION__()
   );
-  return store;
+  const persistor = persistStore(store);
+  return { store, persistor };
 }
