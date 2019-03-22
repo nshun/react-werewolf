@@ -6,7 +6,6 @@ import {
   Button,
   createStyles,
   Fab,
-  Paper,
   Step,
   StepContent,
   StepLabel,
