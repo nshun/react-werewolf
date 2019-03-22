@@ -9,8 +9,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  ListItem,
-  ListItemText,
   MenuItem,
   Select,
   Theme,

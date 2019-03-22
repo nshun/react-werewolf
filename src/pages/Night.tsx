@@ -4,21 +4,21 @@ import { Link } from "react-router-dom";
 
 import {
   Button,
+  createStyles,
   Fab,
-  Paper,
   Step,
   StepContent,
   StepLabel,
   Stepper,
-  Typography
+  Theme,
+  Typography,
+  withStyles,
+  WithStyles
 } from "@material-ui/core";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
 import ActionDialog from "../components/ActionDialog";
 import { AppState } from "../store";
-import { Game, Roles } from "../store/game/types";
+import { Game } from "../store/game/types";
 import withRoot from "../withRoot";
 
 const styles = (theme: Theme) =>

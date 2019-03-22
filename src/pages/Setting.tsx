@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import {
   Button,
+  createStyles,
   Dialog,
   DialogActions,
   DialogContent,
@@ -14,11 +15,11 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography
+  Theme,
+  Typography,
+  withStyles,
+  WithStyles
 } from "@material-ui/core";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
 import NumberMenuItems from "../components/NumberMenuItems";
 import { AppState } from "../store";
