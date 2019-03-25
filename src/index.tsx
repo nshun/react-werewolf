@@ -4,6 +4,8 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
+import configureStore from "./store";
+
 import "./index.css";
 
 import App from "./pages/App";
@@ -11,8 +13,8 @@ import Night from "./pages/Night";
 import Noon from "./pages/Noon";
 import NotFound from "./pages/NotFound";
 import Setting from "./pages/Setting";
+
 import * as serviceWorker from "./serviceWorker";
-import configureStore from "./store";
 
 const { store, persistor } = configureStore();
 
