@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 
 import ActionDialog from "../components/ActionDialog";
+import IntervalDialog from "../components/IntervalDialog";
 import { AppState } from "../store";
 import { tickTime } from "../store/game/actions";
 import { Game, Time } from "../store/game/types";
@@ -78,6 +79,7 @@ class Night extends React.Component<AppProps, State> {
 
     return (
       <div className={classes.root}>
+        <IntervalDialog initialCount={100} />
         <Typography variant="h2" gutterBottom={true}>
           Night
         </Typography>

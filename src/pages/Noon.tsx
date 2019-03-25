@@ -16,6 +16,7 @@ import {
   WithStyles,
 } from "@material-ui/core";
 
+import IntervalDialog from "../components/IntervalDialog";
 import VoteDialog from "../components/VoteDialog";
 import { AppState } from "../store";
 import { tickTime } from "../store/game/actions";
@@ -78,6 +79,7 @@ class Noon extends React.Component<AppProps, State> {
 
     return (
       <div className={classes.root}>
+        <IntervalDialog initialCount={100} />
         <Typography variant="h2" gutterBottom={true}>
           Noon
         </Typography>
