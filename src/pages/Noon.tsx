@@ -21,6 +21,7 @@ import VoteDialog from "../components/VoteDialog";
 import { AppState } from "../store";
 import { tickTime } from "../store/game/actions";
 import { Game, Time } from "../store/game/types";
+import { Setting } from "../store/setting/types";
 import withRoot from "../withRoot";
 
 const styles = (theme: Theme) =>
@@ -50,6 +51,7 @@ const styles = (theme: Theme) =>
   });
 interface AppProps extends WithStyles<typeof styles> {
   tickTime: typeof tickTime;
+  setting: Setting;
   game: Game;
 }
 
@@ -74,12 +76,12 @@ class Noon extends React.Component<AppProps, State> {
   public tickTime = () => this.props.tickTime(this.props.game.date, Time.night);
 
   public render() {
-    const { classes, game } = this.props;
+    const { classes, game, setting } = this.props;
     const { activeStep } = this.state;
 
     return (
       <div className={classes.root}>
-        <IntervalDialog initialCount={100} />
+        <IntervalDialog initialCount={setting.interval} />
         <Typography variant="h2" gutterBottom={true}>
           Noon
         </Typography>
@@ -138,6 +140,7 @@ class Noon extends React.Component<AppProps, State> {
   }
 }
 const mapStateToProps = (state: AppState) => ({
+  setting: state.setting,
   game: state.game,
 });
 

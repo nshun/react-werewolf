@@ -2,6 +2,7 @@ export interface Setting {
   players: number;
   villagers: number;
   werewolves: number;
+  interval: number;
 }
 
 export const UPDATE_SETTINGS = "UPDATE_SETTINGS";

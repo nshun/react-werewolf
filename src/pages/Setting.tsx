@@ -61,11 +61,13 @@ interface State {
   names: string[];
   players: number;
   werewolves: number;
+  interval: number;
 }
 
 class Index extends React.Component<AppProps, State> {
   constructor(props: Readonly<AppProps>) {
     super(props);
+    console.log(props);
     this.state = {
       openName: false,
       openRole: false,
@@ -75,6 +77,7 @@ class Index extends React.Component<AppProps, State> {
         1,
         Math.floor(Number(this.props.setting.players) / 3)
       ),
+      interval: this.props.setting.interval,
     };
   }
   public updateSetting = () => {
@@ -82,6 +85,7 @@ class Index extends React.Component<AppProps, State> {
       players: this.state.players,
       villagers: this.state.players - this.state.werewolves,
       werewolves: this.state.werewolves,
+      interval: this.state.interval,
     };
     this.props.updateSetting(newSetting);
   };
@@ -242,6 +246,16 @@ class Index extends React.Component<AppProps, State> {
           </Button>
         </div>
         <this.RoleDialog />
+        <FormControl className={this.props.classes.formControl}>
+          <InputLabel>Interval seconds</InputLabel>
+          <Select
+            name="interval"
+            value={this.state.interval}
+            onChange={this.handleChange}
+          >
+            {NumberMenuItems(30, 600, 30)}
+          </Select>
+        </FormControl>
         <div className={this.props.classes.wrapper}>
           <Fab
             onClick={this.handleStart}
