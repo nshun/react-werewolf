@@ -78,7 +78,6 @@ class ActionDialog extends React.Component<Props, State> {
     const players = this.props.game.players;
     return (
       <Select
-        name="werewolves"
         value={this.props.player.actionId || ""}
         onChange={this.handleChange}
         className={this.props.classes.select}
@@ -120,7 +119,7 @@ class ActionDialog extends React.Component<Props, State> {
             <DialogContentText id="dialog-description">
               You are the {Roles[player.role]}
             </DialogContentText>
-            {player.role === Roles.werewolf && <this.PlayerMenuItems />}
+            {player.role !== Roles.villager && <this.PlayerMenuItems />}
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
