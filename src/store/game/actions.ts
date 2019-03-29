@@ -1,5 +1,6 @@
 import shuffle from "../../utils/shuffle";
 import {
+  ACTION_PLAYER,
   GameActionTypes,
   GameDate,
   INIT_PLAYERS,
@@ -42,6 +43,7 @@ export const initPlayers = (
           name: names[i] || `Player ${i + 1}`,
           role: val,
           voteId: undefined,
+          actionId: undefined,
         };
       }
     ),
@@ -63,6 +65,22 @@ export const votePlayer = (
     players: players.map(player => {
       if (player.id === id) {
         player.voteId = voteId;
+      }
+      return player;
+    }),
+  };
+};
+
+export const actionPlayer = (
+  players: Player[],
+  id: number,
+  actionId: number
+): GameActionTypes => {
+  return {
+    type: ACTION_PLAYER,
+    players: players.map(player => {
+      if (player.id === id) {
+        player.actionId = actionId;
       }
       return player;
     }),

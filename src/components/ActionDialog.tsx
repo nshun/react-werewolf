@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import {
   Button,
@@ -8,12 +9,16 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  MenuItem,
+  Select,
   Theme,
   WithStyles,
   withStyles,
 } from "@material-ui/core";
 
-import { Player, Roles } from "../store/game/types";
+import { AppState } from "../store";
+import { actionPlayer } from "../store/game/actions";
+import { Game, Player, Roles } from "../store/game/types";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -23,14 +28,20 @@ const styles = (theme: Theme) =>
     openButton: {
       textTransform: "none",
     },
+    select: {
+      minWidth: 150,
+    },
   });
 
 interface Props extends WithStyles<typeof styles> {
+  actionPlayer: typeof actionPlayer;
+  game: Game;
   player: Player;
 }
 
 interface State {
   open: boolean;
+  selectedId: number | null;
 }
 
 class ActionDialog extends React.Component<Props, State> {
@@ -38,12 +49,50 @@ class ActionDialog extends React.Component<Props, State> {
     super(props);
     this.state = {
       open: false,
+      selectedId: null,
     };
   }
+
+  public actionPlayer = (actionId: number) => {
+    this.props.actionPlayer(
+      this.props.game.players,
+      this.props.player.id,
+      actionId
+    );
+  };
 
   public handleClickOpen = () => this.setState({ ...this.state, open: true });
 
   public handleClose = () => this.setState({ ...this.state, open: false });
+
+  public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+    const actionId = Number(evt.target.value);
+    this.actionPlayer(actionId);
+    this.setState({
+      ...this.state,
+      selectedId: actionId,
+    });
+  };
+
+  public PlayerMenuItems = () => {
+    const players = this.props.game.players;
+    return (
+      <Select
+        name="werewolves"
+        value={this.props.player.actionId}
+        onChange={this.handleChange}
+        className={this.props.classes.select}
+      >
+        {players.map(player => {
+          return (
+            <MenuItem key={player.id} value={player.id}>
+              {player.name}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    );
+  };
 
   public render() {
     const { classes, player } = this.props;
@@ -71,10 +120,11 @@ class ActionDialog extends React.Component<Props, State> {
             <DialogContentText id="dialog-description">
               You are the {Roles[player.role]}
             </DialogContentText>
+            {player.role === Roles.werewolf && <this.PlayerMenuItems />}
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Close
+              OK
             </Button>
           </DialogActions>
         </Dialog>
@@ -83,4 +133,11 @@ class ActionDialog extends React.Component<Props, State> {
   }
 }
 
-export default withStyles(styles)(ActionDialog);
+const mapStateToProps = (state: AppState) => ({
+  game: state.game,
+});
+
+export default connect(
+  mapStateToProps,
+  { actionPlayer }
+)(withStyles(styles)(ActionDialog));

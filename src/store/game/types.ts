@@ -13,6 +13,7 @@ export interface Player {
   name: string;
   role: Roles;
   voteId: number | undefined;
+  actionId: number | undefined;
 }
 
 export interface GameDate {
@@ -28,6 +29,7 @@ export interface Game {
 export const INIT_PLAYERS = "INIT_PLAYERS";
 export const UPDATE_PLAYERS = "UPDATE_PLAYERS";
 export const VOTE_PLAYER = "VOTE_PLAYER";
+export const ACTION_PLAYER = "VOTE_PLAYER";
 export const TICK_TIME = "TICK_TIME";
 
 interface InitPlayersAction {

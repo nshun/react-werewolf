@@ -21,6 +21,7 @@ const initState = (num: number): Game => {
         name: "",
         role: Roles.villager,
         voteId: undefined,
+        actionId: undefined,
       };
     }),
     date: {
