@@ -29,6 +29,9 @@ const initState = (num: number): Game => {
       day: 0,
       time: Time.night,
     },
+    history: {
+      lastDiedPlayer: null,
+    },
   };
 };
 

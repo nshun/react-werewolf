@@ -53,6 +53,9 @@ export const initGame = (
         day: 0,
         time: Time.night,
       },
+      history: {
+        lastDiedPlayer: null,
+      },
     },
   };
 };
@@ -120,17 +123,21 @@ function majority(ids: number[]): number {
 }
 
 export const tickTime = (game: Game, nextTime: Time): GameActionTypes => {
+  let lastDiedPlayer: Player | null = null;
+
   const deathId = majority(
     game.players.map(
       player =>
         (nextTime === Time.night ? player.voteId : player.actionId) || -1
     )
   );
+
   return {
     type: TICK_TIME,
     game: {
       players: game.players.map(player => {
         if (player.id === deathId) {
+          lastDiedPlayer = player;
           return {
             ...player,
             alive: false,
@@ -144,6 +151,9 @@ export const tickTime = (game: Game, nextTime: Time): GameActionTypes => {
       date: {
         day: nextTime === Time.night ? game.date.day : game.date.day + 1,
         time: nextTime,
+      },
+      history: {
+        lastDiedPlayer,
       },
     },
   };

@@ -25,6 +25,9 @@ const styles = (theme: Theme) =>
       width: "90%",
       transform: "translateY(-50%) translateX(-50%)",
     },
+    content: {
+      margin: theme.spacing.unit * 4,
+    },
     wrapper: {
       margin: theme.spacing.unit * 2,
     },
@@ -43,6 +46,13 @@ class Result extends React.Component<AppProps, {}> {
         <Typography variant="h2" gutterBottom={true}>
           Result
         </Typography>
+        <div className={classes.content}>
+          <Typography variant="h4" gutterBottom={true}>
+            {game.history.lastDiedPlayer
+              ? `${game.history.lastDiedPlayer.name} was killed`
+              : "No one died"}
+          </Typography>
+        </div>
         <div className={classes.wrapper}>
           {game.date.time === Time.night ? (
             <Fab

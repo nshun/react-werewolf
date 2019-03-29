@@ -22,9 +22,14 @@ export interface GameDate {
   time: Time;
 }
 
+export interface History {
+  lastDiedPlayer: Player | null;
+}
+
 export interface Game {
   players: Player[];
   date: GameDate;
+  history: History;
 }
 
 export const INIT_GAME = "INIT_GAME";
