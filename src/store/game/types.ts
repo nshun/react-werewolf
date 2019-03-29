@@ -47,6 +47,11 @@ interface VotePlayerAction {
   players: Player[];
 }
 
+interface ActionPlayerAction {
+  type: typeof ACTION_PLAYER;
+  players: Player[];
+}
+
 interface TickTimeAction {
   type: typeof TICK_TIME;
   date: GameDate;
@@ -56,4 +61,5 @@ export type GameActionTypes =
   | InitPlayersAction
   | UpdatePlayersAction
   | VotePlayerAction
+  | ActionPlayerAction
   | TickTimeAction;
