@@ -12,6 +12,7 @@ import App from "./pages/App";
 import Night from "./pages/Night";
 import Noon from "./pages/Noon";
 import NotFound from "./pages/NotFound";
+import Result from "./pages/Result";
 import Setting from "./pages/Setting";
 
 import * as serviceWorker from "./serviceWorker";
@@ -28,6 +29,7 @@ const Root = () => (
           <Route exact={true} path="/" component={App} />
           <Route path="/night" component={Night} />
           <Route path="/noon" component={Noon} />
+          <Route path="/result" component={Result} />
           <Route path="/setting" component={Setting} />
           <Route component={NotFound} />
         </Switch>

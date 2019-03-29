@@ -16,6 +16,8 @@ import {
   WithStyles,
 } from "@material-ui/core";
 
+import { NavigateNext } from "@material-ui/icons";
+
 import ActionDialog from "../components/ActionDialog";
 import { AppState } from "../store";
 import { tickTime } from "../store/game/actions";
@@ -121,19 +123,15 @@ class Night extends React.Component<AppProps, State> {
             }
           })}
         </Stepper>
-        <div className={classes.stepper}>
-          <div className={classes.wrapper}>
-            <Fab
-              onClick={this.tickTime}
-              component={Link}
-              {...{ to: "/noon" } as any}
-              variant="extended"
-              color="primary"
-              size="large"
-            >
-              GO NOON
-            </Fab>
-          </div>
+        <div className={classes.wrapper}>
+          <Fab
+            onClick={this.tickTime}
+            component={Link}
+            {...{ to: "/result" } as any}
+            color="primary"
+          >
+            <NavigateNext />
+          </Fab>
         </div>
       </div>
     );
