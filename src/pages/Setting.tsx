@@ -23,8 +23,8 @@ import {
 
 import NumberMenuItems from "../components/NumberMenuItems";
 import { AppState } from "../store";
-import { initPlayers, tickTime } from "../store/game/actions";
-import { Game, GameDate, Time } from "../store/game/types";
+import { initGame } from "../store/game/actions";
+import { Game } from "../store/game/types";
 import { updateSetting } from "../store/setting/actions";
 import { Setting } from "../store/setting/types";
 import withRoot from "../withRoot";
@@ -48,9 +48,8 @@ const styles = (theme: Theme) =>
   });
 
 interface AppProps extends WithStyles<typeof styles> {
-  initPlayers: typeof initPlayers;
+  initGame: typeof initGame;
   updateSetting: typeof updateSetting;
-  tickTime: typeof tickTime;
   setting: Setting;
   game: Game;
 }
@@ -67,7 +66,6 @@ interface State {
 class Index extends React.Component<AppProps, State> {
   constructor(props: Readonly<AppProps>) {
     super(props);
-    console.log(props);
     this.state = {
       openName: false,
       openRole: false,
@@ -89,21 +87,11 @@ class Index extends React.Component<AppProps, State> {
     };
     this.props.updateSetting(newSetting);
   };
-  public initPlayers = () =>
-    this.props.initPlayers(this.state.names, [
+  public initGame = () =>
+    this.props.initGame(this.state.names, [
       this.state.players - this.state.werewolves,
       this.state.werewolves,
     ]);
-  public tickTime = () => {
-    const initGameDate: GameDate = {
-      day: 0,
-      time: Time.night,
-    };
-    this.props.tickTime(
-      { players: this.props.game.players, date: initGameDate },
-      Time.night
-    );
-  };
   public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     switch (evt.target.name) {
       case "players":
@@ -137,8 +125,7 @@ class Index extends React.Component<AppProps, State> {
     this.setState({ ...this.state, openName: false, openRole: false });
   public handleOk = () => this.handleCancel();
   public handleStart = () => {
-    this.initPlayers();
-    this.tickTime();
+    this.initGame();
     this.updateSetting();
   };
 
@@ -283,5 +270,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { updateSetting, initPlayers, tickTime }
+  { updateSetting, initGame }
 )(withRoot(withStyles(styles)(Index)));

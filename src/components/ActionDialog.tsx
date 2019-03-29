@@ -79,7 +79,7 @@ class ActionDialog extends React.Component<Props, State> {
     return (
       <Select
         name="werewolves"
-        value={this.props.player.actionId}
+        value={this.props.player.actionId || ""}
         onChange={this.handleChange}
         className={this.props.classes.select}
       >

@@ -10,6 +10,7 @@ export enum Time {
 
 export interface Player {
   id: number;
+  alive: boolean;
   name: string;
   role: Roles;
   voteId: number | undefined;
@@ -26,15 +27,15 @@ export interface Game {
   date: GameDate;
 }
 
-export const INIT_PLAYERS = "INIT_PLAYERS";
+export const INIT_GAME = "INIT_GAME";
 export const UPDATE_PLAYERS = "UPDATE_PLAYERS";
 export const VOTE_PLAYER = "VOTE_PLAYER";
 export const ACTION_PLAYER = "VOTE_PLAYER";
 export const TICK_TIME = "TICK_TIME";
 
 interface InitPlayersAction {
-  type: typeof INIT_PLAYERS;
-  players: Player[];
+  type: typeof INIT_GAME;
+  game: Game;
 }
 
 interface UpdatePlayersAction {

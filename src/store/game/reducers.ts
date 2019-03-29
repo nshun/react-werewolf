@@ -1,7 +1,7 @@
 import {
   Game,
   GameActionTypes,
-  INIT_PLAYERS,
+  INIT_GAME,
   Roles,
   TICK_TIME,
   Time,
@@ -18,6 +18,7 @@ const initState = (num: number): Game => {
     players: arr.map((val, i) => {
       return {
         id: i,
+        alive: true,
         name: "",
         role: Roles.villager,
         voteId: undefined,
@@ -38,10 +39,10 @@ export default function gameReducer(
   action: GameActionTypes
 ): Game {
   switch (action.type) {
-    case INIT_PLAYERS:
+    case INIT_GAME:
       return {
         ...state,
-        players: [...action.players],
+        ...action.game,
       };
     case UPDATE_PLAYERS:
       return {

@@ -79,7 +79,7 @@ class VoteDialog extends React.Component<Props, State> {
     return (
       <Select
         name="werewolves"
-        value={this.props.player.voteId}
+        value={this.props.player.voteId || ""}
         onChange={this.handleChange}
         className={this.props.classes.select}
       >

@@ -78,6 +78,7 @@ class Noon extends React.Component<AppProps, State> {
   public render() {
     const { classes, game, setting } = this.props;
     const { activeStep } = this.state;
+    let step = 0;
 
     return (
       <div className={classes.root}>
@@ -93,48 +94,51 @@ class Noon extends React.Component<AppProps, State> {
           activeStep={activeStep}
           orientation="vertical"
         >
-          {game.players.map((player, index) => (
-            <Step key={String(player)}>
-              <StepLabel
-                className={classes.stepLabel}
-                // tslint:disable-next-line: jsx-no-lambda
-                onClick={() => this.setActiveStep(index)}
-              >
-                {player.name}
-              </StepLabel>
-              <StepContent>
-                <div className={classes.content}>
-                  <VoteDialog player={player} />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleNext}
-                    className={classes.wrapper}
+          {game.players.map((player, index) => {
+            if (player.alive) {
+              const thisStep = step;
+              step++;
+              return (
+                <Step key={String(player)}>
+                  <StepLabel
+                    className={classes.stepLabel}
+                    // tslint:disable-next-line: jsx-no-lambda
+                    onClick={() => this.setActiveStep(thisStep)}
                   >
-                    {"Next"}
-                  </Button>
-                </div>
-              </StepContent>
-            </Step>
-          ))}
+                    {player.name}
+                  </StepLabel>
+                  <StepContent>
+                    <div className={classes.content}>
+                      <VoteDialog player={player} />
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleNext}
+                        className={classes.wrapper}
+                      >
+                        {"Next"}
+                      </Button>
+                    </div>
+                  </StepContent>
+                </Step>
+              );
+            }
+          })}
         </Stepper>
-        {activeStep === game.players.length && (
-          <div className={classes.stepper}>
-            <Typography>All steps completed - you&apos;re finished</Typography>
-            <div className={classes.wrapper}>
-              <Fab
-                onClick={this.tickTime}
-                component={Link}
-                {...{ to: "/night" } as any}
-                variant="extended"
-                color="primary"
-                size="large"
-              >
-                NEXT
-              </Fab>
-            </div>
+        <div className={classes.stepper}>
+          <div className={classes.wrapper}>
+            <Fab
+              onClick={this.tickTime}
+              component={Link}
+              {...{ to: "/night" } as any}
+              variant="extended"
+              color="primary"
+              size="large"
+            >
+              GO NIGHT
+            </Fab>
           </div>
-        )}
+        </div>
       </div>
     );
   }

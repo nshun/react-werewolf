@@ -3,8 +3,7 @@ import {
   ACTION_PLAYER,
   Game,
   GameActionTypes,
-  GameDate,
-  INIT_PLAYERS,
+  INIT_GAME,
   Player,
   Roles,
   TICK_TIME,
@@ -30,24 +29,31 @@ function createRoles(nums: number[]) {
   return roles;
 }
 
-export const initPlayers = (
+export const initGame = (
   names: string[],
   roleNums: number[]
 ): GameActionTypes => {
   const roles = shuffle(createRoles(roleNums));
   return {
-    type: INIT_PLAYERS,
-    players: roles.map(
-      (val, i): Player => {
-        return {
-          id: i,
-          name: names[i] || `Player ${i + 1}`,
-          role: val,
-          voteId: undefined,
-          actionId: undefined,
-        };
-      }
-    ),
+    type: INIT_GAME,
+    game: {
+      players: roles.map(
+        (val, i): Player => {
+          return {
+            id: i,
+            alive: true,
+            name: names[i] || `Player ${i + 1}`,
+            role: val,
+            voteId: undefined,
+            actionId: undefined,
+          };
+        }
+      ),
+      date: {
+        day: 0,
+        time: Time.night,
+      },
+    },
   };
 };
 
@@ -88,12 +94,52 @@ export const actionPlayer = (
   };
 };
 
+function majority(ids: number[]): number {
+  const cnts: { [key: number]: number } = {};
+  for (const id of ids) {
+    if (cnts.hasOwnProperty(id)) {
+      cnts[id]++;
+    } else {
+      cnts[id] = 1;
+    }
+  }
+  let maxCnt = 0;
+  let maxIds: number[] = [];
+  for (const key in cnts) {
+    if (cnts.hasOwnProperty(key) && Number(key) !== -1) {
+      const cnt = cnts[key];
+      if (maxCnt === cnt) {
+        maxIds = [...maxIds, Number(key)];
+      } else if (maxCnt < cnt) {
+        maxCnt = cnt;
+        maxIds = [Number(key)];
+      }
+    }
+  }
+  return maxIds[Math.floor(Math.random() * maxIds.length)];
+}
+
 export const tickTime = (game: Game, nextTime: Time): GameActionTypes => {
+  const deathId = majority(
+    game.players.map(
+      player =>
+        (nextTime === Time.night ? player.voteId : player.actionId) || -1
+    )
+  );
   return {
     type: TICK_TIME,
     game: {
       players: game.players.map(player => {
-        return { ...player, actionId: undefined, voteId: undefined };
+        if (player.id === deathId) {
+          return {
+            ...player,
+            alive: false,
+            actionId: undefined,
+            voteId: undefined,
+          };
+        } else {
+          return { ...player, actionId: undefined, voteId: undefined };
+        }
       }),
       date: {
         day: nextTime === Time.night ? game.date.day : game.date.day + 1,
