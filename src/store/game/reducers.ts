@@ -56,7 +56,7 @@ export default function gameReducer(
     case TICK_TIME:
       return {
         ...state,
-        date: action.date,
+        ...action.game,
       };
     default:
       return state;

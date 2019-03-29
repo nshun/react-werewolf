@@ -99,7 +99,10 @@ class Index extends React.Component<AppProps, State> {
       day: 0,
       time: Time.night,
     };
-    this.props.tickTime(initGameDate, Time.night);
+    this.props.tickTime(
+      { players: this.props.game.players, date: initGameDate },
+      Time.night
+    );
   };
   public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     switch (evt.target.name) {

@@ -73,7 +73,7 @@ class Noon extends React.Component<AppProps, State> {
   public setActiveStep = (step: number) =>
     this.setState({ ...this.state, activeStep: step });
 
-  public tickTime = () => this.props.tickTime(this.props.game.date, Time.night);
+  public tickTime = () => this.props.tickTime(this.props.game, Time.night);
 
   public render() {
     const { classes, game, setting } = this.props;

@@ -54,7 +54,7 @@ interface ActionPlayerAction {
 
 interface TickTimeAction {
   type: typeof TICK_TIME;
-  date: GameDate;
+  game: Game;
 }
 
 export type GameActionTypes =

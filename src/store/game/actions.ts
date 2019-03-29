@@ -1,6 +1,7 @@
 import shuffle from "../../utils/shuffle";
 import {
   ACTION_PLAYER,
+  Game,
   GameActionTypes,
   GameDate,
   INIT_PLAYERS,
@@ -87,12 +88,17 @@ export const actionPlayer = (
   };
 };
 
-export const tickTime = (date: GameDate, nextTime: Time): GameActionTypes => {
+export const tickTime = (game: Game, nextTime: Time): GameActionTypes => {
   return {
     type: TICK_TIME,
-    date: {
-      day: nextTime === Time.night ? date.day : date.day + 1,
-      time: nextTime,
+    game: {
+      players: game.players.map(player => {
+        return { ...player, actionId: undefined, voteId: undefined };
+      }),
+      date: {
+        day: nextTime === Time.night ? game.date.day : game.date.day + 1,
+        time: nextTime,
+      },
     },
   };
 };
