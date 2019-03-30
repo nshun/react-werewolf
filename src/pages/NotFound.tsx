@@ -1,13 +1,15 @@
 import React from "react";
 
 import {
+  Button,
   createStyles,
-  Paper,
   Theme,
   Typography,
   withStyles,
   WithStyles,
 } from "@material-ui/core";
+
+import withRoot from "../withRoot";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -36,14 +38,19 @@ function NouFound(props: WithStyles<typeof styles>) {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.wrapper} elevation={1}>
+      <div className={classes.wrapper}>
         <Typography variant="h4">404</Typography>
         <Typography variant="subtitle1" className={classes.message}>
           This page could not be found.
         </Typography>
-      </Paper>
+      </div>
+      <div>
+        <Button variant="contained" color="primary">
+          TOP
+        </Button>
+      </div>
     </div>
   );
 }
 
-export default withStyles(styles)(NouFound);
+export default withRoot(withStyles(styles)(NouFound));
