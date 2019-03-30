@@ -40,7 +40,7 @@ export const initGame = (
       players: roles.map(
         (val, i): Player => {
           return {
-            id: i,
+            id: i + 1,
             alive: true,
             name: names[i] || `Player ${i + 1}`,
             role: val,

@@ -78,7 +78,7 @@ class ActionDialog extends React.Component<Props, State> {
     const players = this.props.game.players;
     return (
       <Select
-        value={this.props.player.actionId || ""}
+        value={this.props.player.actionId || 0}
         onChange={this.handleChange}
         className={this.props.classes.select}
       >

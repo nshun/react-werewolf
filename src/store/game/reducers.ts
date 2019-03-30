@@ -17,7 +17,7 @@ const initState = (num: number): Game => {
   return {
     players: arr.map((val, i) => {
       return {
-        id: i,
+        id: i + 1,
         alive: true,
         name: "",
         role: Roles.villager,
