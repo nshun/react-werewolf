@@ -32,6 +32,7 @@
     "react-scripts": "2.1.8",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
+    "typeface-roboto": "0.0.54",
     "typescript": "3.3.4000"
   },
   "devDependencies": {
