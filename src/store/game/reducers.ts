@@ -21,15 +21,16 @@ const initState = (num: number): Game => {
         alive: true,
         name: "",
         role: Roles.villager,
-        voteId: undefined,
-        actionId: undefined,
+        voteId: null,
+        actionId: null,
       };
     }),
     date: {
       day: 0,
       time: Time.night,
     },
-    history: {
+    state: {
+      winner: null,
       lastDiedPlayer: null,
     },
   };

@@ -44,8 +44,8 @@ export const initGame = (
             alive: true,
             name: names[i] || `Player ${i + 1}`,
             role: val,
-            voteId: undefined,
-            actionId: undefined,
+            voteId: null,
+            actionId: null,
           };
         }
       ),
@@ -53,7 +53,8 @@ export const initGame = (
         day: 0,
         time: Time.night,
       },
-      history: {
+      state: {
+        winner: null,
         lastDiedPlayer: null,
       },
     },
@@ -122,37 +123,62 @@ function majority(ids: number[]): number {
   return maxIds[Math.floor(Math.random() * maxIds.length)];
 }
 
-export const tickTime = (game: Game, nextTime: Time): GameActionTypes => {
+function vote(players: Player[], nextTime: Time) {
   let lastDiedPlayer: Player | null = null;
 
   const deathId = majority(
-    game.players.map(
+    players.map(
       player =>
         (nextTime === Time.night ? player.voteId : player.actionId) || -1
     )
   );
 
+  const votedPlayers: Player[] = players.map(player => {
+    if (player.id === deathId) {
+      lastDiedPlayer = player;
+      return {
+        ...player,
+        alive: false,
+        actionId: null,
+        voteId: null,
+      };
+    } else {
+      return { ...player, actionId: null, voteId: null };
+    }
+  });
+
+  return {
+    lastDiedPlayer,
+    votedPlayers,
+  };
+}
+
+function chkWinner(players: Player[]) {
+  const alives = players.filter(player => player.alive);
+  const werewoves = alives.filter(player => player.role === Roles.werewolf);
+  if (alives.length === werewoves.length) {
+    return Roles.werewolf;
+  } else if (werewoves.length === 0) {
+    return Roles.villager;
+  } else {
+    return null;
+  }
+}
+
+export const tickTime = (game: Game, nextTime: Time): GameActionTypes => {
+  const { lastDiedPlayer, votedPlayers } = vote(game.players, nextTime);
+  const winner = chkWinner(votedPlayers);
+
   return {
     type: TICK_TIME,
     game: {
-      players: game.players.map(player => {
-        if (player.id === deathId) {
-          lastDiedPlayer = player;
-          return {
-            ...player,
-            alive: false,
-            actionId: undefined,
-            voteId: undefined,
-          };
-        } else {
-          return { ...player, actionId: undefined, voteId: undefined };
-        }
-      }),
+      players: votedPlayers,
       date: {
         day: nextTime === Time.night ? game.date.day : game.date.day + 1,
         time: nextTime,
       },
-      history: {
+      state: {
+        winner,
         lastDiedPlayer,
       },
     },

@@ -13,8 +13,8 @@ export interface Player {
   alive: boolean;
   name: string;
   role: Roles;
-  voteId: number | undefined;
-  actionId: number | undefined;
+  voteId: number | null;
+  actionId: number | null;
 }
 
 export interface GameDate {
@@ -22,14 +22,15 @@ export interface GameDate {
   time: Time;
 }
 
-export interface History {
+export interface GameState {
+  winner: Roles | null;
   lastDiedPlayer: Player | null;
 }
 
 export interface Game {
   players: Player[];
   date: GameDate;
-  history: History;
+  state: GameState;
 }
 
 export const INIT_GAME = "INIT_GAME";
