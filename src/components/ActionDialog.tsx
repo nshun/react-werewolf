@@ -12,6 +12,7 @@ import {
   MenuItem,
   Select,
   Theme,
+  Typography,
   WithStyles,
   withStyles,
 } from "@material-ui/core";
@@ -77,19 +78,33 @@ class ActionDialog extends React.Component<Props, State> {
   public PlayerMenuItems = () => {
     const players = this.props.game.players;
     return (
-      <Select
-        value={this.props.player.actionId || 0}
-        onChange={this.handleChange}
-        className={this.props.classes.select}
-      >
-        {players.map(player => {
-          return (
-            <MenuItem key={player.id} value={player.id}>
-              {player.name}
-            </MenuItem>
-          );
-        })}
-      </Select>
+      <div>
+        {this.props.player.role === Roles.werewolf && (
+          <Typography variant="body2">
+            Others:{" "}
+            {players
+              .filter(
+                player =>
+                  player.role === Roles.werewolf && player !== this.props.player
+              )
+              .map(player => player.name)
+              .join(", ")}
+          </Typography>
+        )}
+        <Select
+          value={this.props.player.actionId || 0}
+          onChange={this.handleChange}
+          className={this.props.classes.select}
+        >
+          {players.map(player => {
+            return (
+              <MenuItem key={player.id} value={player.id}>
+                {player.name}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </div>
     );
   };
 
@@ -117,7 +132,9 @@ class ActionDialog extends React.Component<Props, State> {
           <DialogTitle id="dialog-title">{player.name}</DialogTitle>
           <DialogContent>
             <DialogContentText id="dialog-description">
-              You are the {Roles[player.role]}
+              <Typography variant="body1">
+                You are the {Roles[player.role]}
+              </Typography>
             </DialogContentText>
             {player.role !== Roles.villager && <this.PlayerMenuItems />}
           </DialogContent>
