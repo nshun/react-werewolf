@@ -2,6 +2,8 @@
 
 # react-werewolf
 
+https://werewolf.nnshun.com/
+
 # References
 
 - https://facebook.github.io/create-react-app/
