@@ -10,10 +10,6 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
-import configureStore from "./store";
-
-const { persistor } = configureStore();
-
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
     // [::1] is the IPv6 localhost address.
@@ -85,8 +81,6 @@ function registerValidSW(swUrl: string, config?: Config) {
                 "New content is available and will be used when all " +
                   "tabs for this page are closed. See https://bit.ly/CRA-PWA."
               );
-
-              persistor.purge();
 
               // Execute callback
               if (config && config.onUpdate) {
