@@ -83,13 +83,15 @@ class VoteDialog extends React.Component<Props, State> {
         onChange={this.handleChange}
         className={this.props.classes.select}
       >
-        {players.map(player => {
-          return (
-            <MenuItem key={player.id} value={player.id}>
-              {player.name}
-            </MenuItem>
-          );
-        })}
+        {players
+          .filter(p => p.alive)
+          .map(p => {
+            return (
+              <MenuItem key={p.id} value={p.id}>
+                {p.name}
+              </MenuItem>
+            );
+          })}
       </Select>
     );
   };

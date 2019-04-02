@@ -19,6 +19,7 @@ const initState = (num: number): Game => {
       return {
         id: i + 1,
         alive: true,
+        actioned: false,
         name: "",
         role: Roles.villager,
         voteId: null,

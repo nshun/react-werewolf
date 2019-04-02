@@ -114,7 +114,7 @@ class Night extends React.Component<AppProps, State> {
                         onClick={this.handleNext}
                         className={classes.wrapper}
                       >
-                        {"Next"}
+                        Next
                       </Button>
                     </div>
                   </StepContent>

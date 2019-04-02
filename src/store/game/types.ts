@@ -1,6 +1,8 @@
 export enum Roles {
   villager,
   werewolf,
+  seer,
+  doctor,
 }
 
 export enum Time {
@@ -11,6 +13,7 @@ export enum Time {
 export interface Player {
   id: number;
   alive: boolean;
+  actioned: boolean;
   name: string;
   role: Roles;
   voteId: number | null;
@@ -36,7 +39,8 @@ export interface Game {
 export const INIT_GAME = "INIT_GAME";
 export const UPDATE_PLAYERS = "UPDATE_PLAYERS";
 export const VOTE_PLAYER = "VOTE_PLAYER";
-export const ACTION_PLAYER = "VOTE_PLAYER";
+export const ACTION_PLAYER = "ACTION_PLAYER";
+export const FINISH_ACTION = "FINISH_ACTION";
 export const TICK_TIME = "TICK_TIME";
 
 interface InitPlayersAction {
@@ -59,6 +63,11 @@ interface ActionPlayerAction {
   players: Player[];
 }
 
+interface FinishActionAction {
+  type: typeof FINISH_ACTION;
+  players: Player[];
+}
+
 interface TickTimeAction {
   type: typeof TICK_TIME;
   game: Game;
@@ -69,4 +78,5 @@ export type GameActionTypes =
   | UpdatePlayersAction
   | VotePlayerAction
   | ActionPlayerAction
+  | FinishActionAction
   | TickTimeAction;

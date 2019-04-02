@@ -1,6 +1,7 @@
 import shuffle from "../../utils/shuffle";
 import {
   ACTION_PLAYER,
+  FINISH_ACTION,
   Game,
   GameActionTypes,
   INIT_GAME,
@@ -42,6 +43,7 @@ export const initGame = (
           return {
             id: i + 1,
             alive: true,
+            actioned: false,
             name: names[i] || `Player ${i + 1}`,
             role: val,
             voteId: null,
@@ -98,7 +100,22 @@ export const actionPlayer = (
   };
 };
 
-function majority(ids: number[]): number {
+export const finishAction = (
+  players: Player[],
+  id: number
+): GameActionTypes => {
+  return {
+    type: FINISH_ACTION,
+    players: players.map(player => {
+      if (player.id === id) {
+        player.actioned = true;
+      }
+      return player;
+    }),
+  };
+};
+
+function majority(ids: number[]) {
   const cnts: { [key: number]: number } = {};
   for (const id of ids) {
     if (cnts.hasOwnProperty(id)) {
@@ -120,18 +137,34 @@ function majority(ids: number[]): number {
       }
     }
   }
-  return maxIds[Math.floor(Math.random() * maxIds.length)];
+  return maxIds[Math.floor(Math.random() * maxIds.length)] || null;
 }
 
 function vote(players: Player[], nextTime: Time) {
   let lastDiedPlayer: Player | null = null;
+  let protectedIds: number[] = [];
 
-  const deathId = majority(
+  let deathId = majority(
     players.map(
       player =>
         (nextTime === Time.night ? player.voteId : player.actionId) || -1
     )
   );
+
+  for (const player of players) {
+    if (player.role === Roles.doctor && player.actionId) {
+      protectedIds = [...protectedIds, player.actionId];
+    }
+  }
+
+  if (deathId) {
+    for (const id of protectedIds) {
+      if (deathId === id) {
+        deathId = null;
+        break;
+      }
+    }
+  }
 
   const votedPlayers: Player[] = players.map(player => {
     if (player.id === deathId) {
@@ -139,11 +172,12 @@ function vote(players: Player[], nextTime: Time) {
       return {
         ...player,
         alive: false,
+        actioned: false,
         actionId: null,
         voteId: null,
       };
     } else {
-      return { ...player, actionId: null, voteId: null };
+      return { ...player, actioned: false, actionId: null, voteId: null };
     }
   });
 

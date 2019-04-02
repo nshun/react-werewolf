@@ -60,6 +60,8 @@ interface State {
   names: string[];
   players: number;
   werewolves: number;
+  seers: number;
+  doctors: number;
   interval: number;
 }
 
@@ -75,13 +77,15 @@ class Index extends React.Component<AppProps, State> {
         1,
         Math.floor(Number(this.props.setting.players) / 3)
       ),
+      seers: 1,
+      doctors: 1,
       interval: this.props.setting.interval,
     };
   }
   public updateSetting = () => {
     const newSetting: Setting = {
       players: this.state.players,
-      villagers: this.state.players - this.state.werewolves,
+      villagers: this.calcRemains(0),
       werewolves: this.state.werewolves,
       interval: this.state.interval,
     };
@@ -89,8 +93,10 @@ class Index extends React.Component<AppProps, State> {
   };
   public initGame = () =>
     this.props.initGame(this.state.names, [
-      this.state.players - this.state.werewolves,
+      this.calcRemains(1),
       this.state.werewolves,
+      this.state.seers,
+      this.state.doctors,
     ]);
   public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     switch (evt.target.name) {
@@ -163,8 +169,13 @@ class Index extends React.Component<AppProps, State> {
     );
   };
 
+  public calcRemains = (current: number) => {
+    const { players, werewolves, seers, doctors } = this.state;
+    return players - werewolves - seers - doctors + current - 1;
+  };
+
   public RoleDialog = () => {
-    const villagers = this.state.players - this.state.werewolves;
+    const villagers = this.calcRemains(1);
     return (
       <Dialog open={this.state.openRole} onClose={this.handleCancel}>
         <DialogTitle>Roles</DialogTitle>
@@ -188,7 +199,31 @@ class Index extends React.Component<AppProps, State> {
                 value={this.state.werewolves}
                 onChange={this.handleChange}
               >
-                {NumberMenuItems(1, this.state.players - 1)}
+                {NumberMenuItems(1, this.calcRemains(this.state.werewolves))}
+              </Select>
+            </FormControl>
+          </form>
+          <form>
+            <FormControl className={this.props.classes.formControl}>
+              <InputLabel>The Seers</InputLabel>
+              <Select
+                name="seers"
+                value={this.state.seers}
+                onChange={this.handleChange}
+              >
+                {NumberMenuItems(0, this.calcRemains(this.state.seers))}
+              </Select>
+            </FormControl>
+          </form>
+          <form>
+            <FormControl className={this.props.classes.formControl}>
+              <InputLabel>The Doctors</InputLabel>
+              <Select
+                name="doctors"
+                value={this.state.doctors}
+                onChange={this.handleChange}
+              >
+                {NumberMenuItems(0, this.calcRemains(this.state.doctors))}
               </Select>
             </FormControl>
           </form>
@@ -220,7 +255,7 @@ class Index extends React.Component<AppProps, State> {
               onChange={this.handleChange}
               onClose={this.handleOpenName}
             >
-              {NumberMenuItems(2, 10)}
+              {NumberMenuItems(4, 12)}
             </Select>
           </FormControl>
         </form>

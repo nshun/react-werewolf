@@ -18,7 +18,7 @@ import {
 } from "@material-ui/core";
 
 import { AppState } from "../store";
-import { actionPlayer } from "../store/game/actions";
+import { actionPlayer, finishAction } from "../store/game/actions";
 import { Game, Player, Roles } from "../store/game/types";
 
 const styles = (theme: Theme) =>
@@ -36,12 +36,14 @@ const styles = (theme: Theme) =>
 
 interface Props extends WithStyles<typeof styles> {
   actionPlayer: typeof actionPlayer;
+  finishAction: typeof finishAction;
   game: Game;
   player: Player;
 }
 
 interface State {
   open: boolean;
+  resultOpen: boolean;
   selectedId: number | null;
 }
 
@@ -50,6 +52,7 @@ class ActionDialog extends React.Component<Props, State> {
     super(props);
     this.state = {
       open: false,
+      resultOpen: false,
       selectedId: null,
     };
   }
@@ -62,9 +65,25 @@ class ActionDialog extends React.Component<Props, State> {
     );
   };
 
+  public finishAction = () =>
+    this.props.finishAction(this.props.game.players, this.props.player.id);
+
   public handleClickOpen = () => this.setState({ ...this.state, open: true });
 
-  public handleClose = () => this.setState({ ...this.state, open: false });
+  public handleClose = () => {
+    this.finishAction();
+    this.setState({
+      ...this.state,
+      open: false,
+      resultOpen: this.props.player.role === Roles.seer,
+    });
+  };
+
+  public handleResultClose = () =>
+    this.setState({
+      ...this.state,
+      resultOpen: false,
+    });
 
   public handleChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     const actionId = Number(evt.target.value);
@@ -73,6 +92,35 @@ class ActionDialog extends React.Component<Props, State> {
       ...this.state,
       selectedId: actionId,
     });
+  };
+
+  public ActionResultDialog = () => {
+    const { game, player } = this.props;
+    return (
+      <Dialog
+        open={this.state.resultOpen}
+        keepMounted={true}
+        onClose={this.handleResultClose}
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-description"
+      >
+        <DialogTitle id="dialog-title">Result</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="dialog-description">
+            <Typography variant="body1">
+              {game.players
+                .filter(p => p.id === player.actionId)
+                .map(p => `${p.name} is ${Roles[p.role]}`)}
+            </Typography>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleResultClose} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
   };
 
   public PlayerMenuItems = () => {
@@ -96,13 +144,15 @@ class ActionDialog extends React.Component<Props, State> {
           onChange={this.handleChange}
           className={this.props.classes.select}
         >
-          {players.map(player => {
-            return (
-              <MenuItem key={player.id} value={player.id}>
-                {player.name}
-              </MenuItem>
-            );
-          })}
+          {players
+            .filter(p => p.alive)
+            .map(p => {
+              return (
+                <MenuItem key={p.id} value={p.id}>
+                  {p.name}
+                </MenuItem>
+              );
+            })}
         </Select>
       </div>
     );
@@ -114,9 +164,11 @@ class ActionDialog extends React.Component<Props, State> {
 
     return (
       <div className={classes.wrapper}>
+        <this.ActionResultDialog />
         <Button
           variant="outlined"
           color="primary"
+          disabled={this.props.player.actioned}
           onClick={this.handleClickOpen}
           className={classes.openButton}
         >
@@ -155,5 +207,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { actionPlayer }
+  { actionPlayer, finishAction }
 )(withStyles(styles)(ActionDialog));
