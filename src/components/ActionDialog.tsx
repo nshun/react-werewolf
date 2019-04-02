@@ -106,13 +106,11 @@ class ActionDialog extends React.Component<Props, State> {
       >
         <DialogTitle id="dialog-title">Result</DialogTitle>
         <DialogContent>
-          <DialogContentText id="dialog-description">
-            <Typography variant="body1">
-              {game.players
-                .filter(p => p.id === player.actionId)
-                .map(p => `${p.name} is ${Roles[p.role]}`)}
-            </Typography>
-          </DialogContentText>
+          <Typography variant="body1">
+            {game.players
+              .filter(p => p.id === player.actionId)
+              .map(p => `${p.name} is ${Roles[p.role]}`)}
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleResultClose} color="primary">
@@ -183,11 +181,9 @@ class ActionDialog extends React.Component<Props, State> {
         >
           <DialogTitle id="dialog-title">{player.name}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="dialog-description">
-              <Typography variant="body1">
-                You are the {Roles[player.role]}
-              </Typography>
-            </DialogContentText>
+            <Typography variant="body1">
+              You are the {Roles[player.role]}
+            </Typography>
             {player.role !== Roles.villager && <this.PlayerMenuItems />}
           </DialogContent>
           <DialogActions>

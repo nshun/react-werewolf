@@ -74,13 +74,13 @@ class Index extends React.Component<AppProps, State> {
       openName: false,
       openRole: false,
       names: this.props.game.players.map(val => val.name),
-      players: players || 6,
+      players,
       werewolves: Math.max(
         1,
         Math.floor(Number(this.props.setting.players) / 3)
       ),
-      seers: seers || 1,
-      doctors: doctors || 1,
+      seers,
+      doctors,
       interval: this.props.setting.interval,
     };
   }
