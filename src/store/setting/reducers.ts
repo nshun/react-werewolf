@@ -2,7 +2,7 @@ import { Setting, SettingActionTypes, UPDATE_SETTINGS } from "./types";
 
 const initialState: Setting = {
   players: 6,
-  villagers: 4,
+  villagers: 2,
   werewolves: 2,
   seers: 1,
   doctors: 1,
