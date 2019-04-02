@@ -27,12 +27,8 @@ import withRoot from "../withRoot";
 const styles = (theme: Theme) =>
   createStyles({
     root: {
+      paddingTop: theme.spacing.unit * 10,
       textAlign: "center",
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      width: "90%",
-      transform: "translateY(-50%) translateX(-50%)",
     },
     wrapper: {
       margin: theme.spacing.unit * 2,
