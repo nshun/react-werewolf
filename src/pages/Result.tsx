@@ -54,7 +54,7 @@ class Result extends React.Component<AppProps, {}> {
         return (
           <div className={classes.content}>
             <Typography variant="h4" gutterBottom={true}>
-              {/* {winner === Roles.werewolf ? "Werewolves won" : "Villagers won"} */}
+              {winner === Roles.werewolf ? "Werewolves won" : "Villagers won"}
             </Typography>
             <List className={classes.list}>
               {game.players.map(player => (
