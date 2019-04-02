@@ -85,7 +85,7 @@ class Index extends React.Component<AppProps, State> {
   public updateSetting = () => {
     const newSetting: Setting = {
       players: this.state.players,
-      villagers: this.calcRemains(0),
+      villagers: this.calcRemains(1),
       werewolves: this.state.werewolves,
       interval: this.state.interval,
     };
