@@ -19,7 +19,7 @@ import * as serviceWorker from "./serviceWorker";
 
 const { store, persistor } = configureStore();
 
-persistor.purge();
+// persistor.purge();
 
 const Root = () => (
   <Provider store={store}>
