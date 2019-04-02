@@ -4,6 +4,8 @@ const initialState: Setting = {
   players: 6,
   villagers: 4,
   werewolves: 2,
+  seers: 1,
+  doctors: 1,
   interval: 120,
 };
 

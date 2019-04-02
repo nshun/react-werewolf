@@ -68,26 +68,31 @@ interface State {
 class Index extends React.Component<AppProps, State> {
   constructor(props: Readonly<AppProps>) {
     super(props);
+
+    const { players, seers, doctors } = this.props.setting;
     this.state = {
       openName: false,
       openRole: false,
       names: this.props.game.players.map(val => val.name),
-      players: this.props.setting.players,
+      players,
       werewolves: Math.max(
         1,
         Math.floor(Number(this.props.setting.players) / 3)
       ),
-      seers: 1,
-      doctors: 1,
+      seers,
+      doctors,
       interval: this.props.setting.interval,
     };
   }
   public updateSetting = () => {
+    const { players, werewolves, seers, doctors, interval } = this.state;
     const newSetting: Setting = {
-      players: this.state.players,
+      players,
       villagers: this.calcRemains(1),
-      werewolves: this.state.werewolves,
-      interval: this.state.interval,
+      werewolves,
+      seers,
+      doctors,
+      interval,
     };
     this.props.updateSetting(newSetting);
   };

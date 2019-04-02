@@ -2,6 +2,8 @@ export interface Setting {
   players: number;
   villagers: number;
   werewolves: number;
+  seers: number;
+  doctors: number;
   interval: number;
 }
 
