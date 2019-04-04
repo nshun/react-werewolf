@@ -8,6 +8,8 @@ import configureStore from "./store";
 
 import "typeface-roboto";
 
+import ProgressBar from "./components/ProgressBar";
+
 const Top = lazy(() => import("./pages/Top"));
 const Night = lazy(() => import("./pages/Night"));
 const Noon = lazy(() => import("./pages/Noon"));
@@ -23,7 +25,7 @@ const Root = () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <Router>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={ProgressBar}>
           <Switch>
             <Route exact={true} path="/" component={Top} />
             <Route path="/night" component={Night} />
