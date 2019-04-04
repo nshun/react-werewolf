@@ -40,7 +40,7 @@ const styles = (theme: Theme) =>
     },
   });
 
-class Index extends React.Component<WithStyles<typeof styles>, {}> {
+class Top extends React.Component<WithStyles<typeof styles>, {}> {
   public render() {
     const { classes } = this.props;
 
@@ -51,7 +51,9 @@ class Index extends React.Component<WithStyles<typeof styles>, {}> {
           <ClearCacheButton />
         </div>
         <div className={classes.content}>
-          <Typography variant="h1">Werewolf</Typography>
+          <Typography variant="h1" className={classes.wrapper}>
+            Werewolf
+          </Typography>
           <Typography variant="subtitle1" className={classes.wrapper}>
             A party game with offline
           </Typography>
@@ -71,4 +73,4 @@ class Index extends React.Component<WithStyles<typeof styles>, {}> {
   }
 }
 
-export default withRoot(withStyles(styles)(Index));
+export default withRoot(withStyles(styles)(Top));
