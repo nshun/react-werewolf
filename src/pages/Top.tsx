@@ -1,26 +1,19 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import {
-  Button,
   createStyles,
   Fab,
-  IconButton,
   Theme,
   Typography,
   withStyles,
   WithStyles,
 } from "@material-ui/core";
 
-import { grey } from "@material-ui/core/colors";
-
 import ClearCacheButton from "../components/ClearCacheButton";
 import GithubButton from "../components/GithubButton";
 
-import configureStore from "../store";
 import withRoot from "../withRoot";
-
-const { persistor } = configureStore();
 
 const styles = (theme: Theme) =>
   createStyles({

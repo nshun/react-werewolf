@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { lazy } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -18,10 +18,12 @@ import {
 
 import { NavigateNext } from "@material-ui/icons";
 
-import ActionDialog from "../components/ActionDialog";
+const ActionDialog = lazy(() => import("../components/ActionDialog"));
+
 import { AppState } from "../store";
 import { tickTime } from "../store/game/actions";
 import { Game, Time } from "../store/game/types";
+
 import withRoot from "../withRoot";
 
 const styles = (theme: Theme) =>

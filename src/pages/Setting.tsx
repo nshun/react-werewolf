@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { lazy } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -22,11 +22,13 @@ import {
 } from "@material-ui/core";
 
 import NumberMenuItems from "../components/NumberMenuItems";
+
 import { AppState } from "../store";
 import { initGame } from "../store/game/actions";
 import { Game } from "../store/game/types";
 import { updateSetting } from "../store/setting/actions";
 import { Setting } from "../store/setting/types";
+
 import withRoot from "../withRoot";
 
 const styles = (theme: Theme) =>

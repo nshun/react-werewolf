@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -6,32 +6,32 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import configureStore from "./store";
 
-import "./index.css";
+import "typeface-roboto";
 
-import App from "./pages/App";
-import Night from "./pages/Night";
-import Noon from "./pages/Noon";
-import NotFound from "./pages/NotFound";
-import Result from "./pages/Result";
-import Setting from "./pages/Setting";
+const Top = lazy(() => import("./pages/Top"));
+const Night = lazy(() => import("./pages/Night"));
+const Noon = lazy(() => import("./pages/Noon"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Result = lazy(() => import("./pages/Result"));
+const Setting = lazy(() => import("./pages/Setting"));
 
 import * as serviceWorker from "./serviceWorker";
 
 const { store, persistor } = configureStore();
-
-// persistor.purge();
 
 const Root = () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <Router>
         <Switch>
-          <Route exact={true} path="/" component={App} />
-          <Route path="/night" component={Night} />
-          <Route path="/noon" component={Noon} />
-          <Route path="/result" component={Result} />
-          <Route path="/setting" component={Setting} />
-          <Route component={NotFound} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Route exact={true} path="/" component={Top} />
+            <Route exact={true} path="/night" component={Night} />
+            <Route exact={true} path="/noon" component={Noon} />
+            <Route exact={true} path="/result" component={Result} />
+            <Route exact={true} path="/setting" component={Setting} />
+            <Route component={NotFound} />
+          </Suspense>
         </Switch>
       </Router>
     </PersistGate>

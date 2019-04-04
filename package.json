@@ -5,6 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "rimraf build/**/*.map",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write src/**/*.{js,ts,tsx,json,css}",
@@ -32,6 +33,7 @@
     "react-scripts": "2.1.8",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
+    "rimraf": "^2.6.3",
     "typeface-roboto": "0.0.54",
     "typescript": "3.3.4000"
   },
