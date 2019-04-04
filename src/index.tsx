@@ -23,16 +23,16 @@ const Root = () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <Router>
-        <Switch>
-          <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
             <Route exact={true} path="/" component={Top} />
-            <Route exact={true} path="/night" component={Night} />
-            <Route exact={true} path="/noon" component={Noon} />
-            <Route exact={true} path="/result" component={Result} />
-            <Route exact={true} path="/setting" component={Setting} />
+            <Route path="/night" component={Night} />
+            <Route path="/noon" component={Noon} />
+            <Route path="/result" component={Result} />
+            <Route path="/setting" component={Setting} />
             <Route component={NotFound} />
-          </Suspense>
-        </Switch>
+          </Switch>
+        </Suspense>
       </Router>
     </PersistGate>
   </Provider>
