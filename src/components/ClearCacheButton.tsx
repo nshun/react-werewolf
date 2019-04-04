@@ -57,6 +57,9 @@ class CountDownDialog extends React.Component<
 
     return (
       <div>
+        <IconButton onClick={this.handleOpen}>
+          <DeleteIcon fontSize="small" color="secondary" />
+        </IconButton>
         <Dialog open={open} keepMounted={true}>
           <DialogTitle>Confirm</DialogTitle>
           <DialogContent>
@@ -71,9 +74,6 @@ class CountDownDialog extends React.Component<
             </Button>
           </DialogActions>
         </Dialog>
-        <IconButton onClick={this.handleOpen}>
-          <DeleteIcon fontSize="small" color="secondary" />
-        </IconButton>
       </div>
     );
   }

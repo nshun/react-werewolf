@@ -29,8 +29,10 @@ function GithubButton(props: Readonly<WithStyles<typeof styles>>) {
 
   return (
     <Button
-      target="_blank"
       href="https://github.com/nshun/react-werewolf"
+      target="_blank"
+      rel="noopener"
+      value="Github repository"
       size="small"
       variant="outlined"
       className={classes.githubButton}
