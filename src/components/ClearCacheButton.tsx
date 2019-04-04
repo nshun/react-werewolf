@@ -57,7 +57,7 @@ class CountDownDialog extends React.Component<
 
     return (
       <div>
-        <IconButton onClick={this.handleOpen}>
+        <IconButton onClick={this.handleOpen} value="clear cache">
           <DeleteIcon fontSize="small" color="secondary" />
         </IconButton>
         <Dialog open={open} keepMounted={true}>
