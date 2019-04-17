@@ -1,0 +1,18 @@
+@startuml overview
+
+start
+:Top;
+:Setting;
+
+repeat
+if (next is night?) then (yes)
+  :Night;
+else (no)
+  :Noon;
+endif
+:Result;
+repeat while (continue?)
+
+end
+
+@enduml
