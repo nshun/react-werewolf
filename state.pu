@@ -1,0 +1,21 @@
+@startuml redux
+
+hide empty description
+
+[*] -> LoadAssets : Accessed
+LoadAssets --> CheckStorage : Succeeded
+LoadAssets --> LoadAssets : Failed
+LoadAssets --> [*] : Aborted
+CheckStorage --> Rehydrate : Found
+CheckStorage --> ReduxReducer : Not Found
+Rehydrate : Load state from LocalStorage
+Rehydrate --> ReduxReducer
+
+state ReduxReducer {
+  NewState --> Store
+  NewState --> LocalStorage
+}
+
+ReduxReducer --> [*] : Finished
+
+@enduml
