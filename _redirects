@@ -1,0 +1,3 @@
+/*  /index.html  200
+# Redirect default Netlify subdomain to primary domain
+http://admiring-turing-ea40e8.netlify.com/* http://werewolf.nnshun.com/:splat 301!
